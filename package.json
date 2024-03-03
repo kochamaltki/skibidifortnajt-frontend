@@ -17,7 +17,8 @@
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^7.1.2",
     "svelte": "^3.55.0",
-    "svelte-routing": "^2.12.0"
+    "svelte-routing": "^2.12.0",
+    "typescript-svelte-plugin": "^0.3.37"
   },
   "dependencies": {
     "sirv-cli": "^2.0.0"

@@ -3,7 +3,7 @@
 	import Home from "./routes/front_page.svelte";
 	import Todo from "./routes/Todo.svelte";
 	export let url = "";
-  </script>
+</script>
 
 <Router {url}>
 	<div>
