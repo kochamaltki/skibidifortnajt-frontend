@@ -23,7 +23,7 @@
 
 <main>
 	<h1> Wybierz swojom alternatywke </h1>
-	<p>One of the websites of all time</p>
+	<p> One of the websites of all time </p>
 	{#if $ImageStore.filename == 'altgirls/altgirl1.jpg'}
 		<h3>I wish to swear allegiance to my Lord Chungus and to honor and defend the Word and Legacy of Chungus until the end of time.</h3>
 	{:else}
@@ -33,7 +33,7 @@
 	<div class="card">
 		<Card><img src={filename} alt="alt gilr"> </Card>
 	</div>
-	<div>
+	<div class="buttons">
 		<button on:click={updateImage}>Next</button>
 		<button on:click={() => navigate("/")}>Back</button>
 	</div>
@@ -47,13 +47,8 @@
 		font-weight: 100;
 	}
 
-	.card {
-		margin: 25px;
-	}
-
 	main {
 		text-align: center;
-		margin: auto;
 	}
 
 	img {
@@ -67,6 +62,6 @@
 		padding: 8px 12px;
 		font-weight: bold;
 		box-shadow: 0px 2px 4px rgba(0,0,0,0.3);
-		margin: 0px 10px;
+		margin: 40px 20px 0px 0px;
 	}
 </style>
