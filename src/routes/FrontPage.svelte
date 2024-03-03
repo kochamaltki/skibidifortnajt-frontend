@@ -1,17 +1,14 @@
 <script>
-	import { Router, Link, Route } from "svelte-routing";
-	import Home from "../routes/front_page.svelte";
-	import Todo from "../routes/Todo.svelte";
-	let url = "";
-  </script>
+	import { Link } from "svelte-routing";
+</script>
 
 <main>
 	<h1>Hello Alternatywki!</h1>
 	<p>Visit <a href="https://www.instagram.com/peat_lul/">this</a> to learn more about sigma male giga chad Pit Do.</p>
-	<h3> ALTERNATYWKI PROSZE ZRUBCIE JUZ COS ZEMNOM</h3>
-	<img src="altgirl.jpg" alt>
-	<p>New Jeans here -> 
-	<Link to="/todo">About</Link>
+	<h3>ALTERNATYWKI PROSZE ZRUBCIE JUZ COS ZEMNOM</h3>
+	<img src="altgirl.jpg" alt="alt gril">
+	<p>
+		New Jeans here -> <Link to="/alternatywki">About</Link>
     </p>
 </main>
 

@@ -1,13 +1,11 @@
 <script>
-	import { Router, Link, Route } from "svelte-routing";
-	import Home from "./routes/front_page.svelte";
-	import Todo from "./routes/Todo.svelte";
+	import { Router, Route } from "svelte-routing";
+	import Home from "./routes/FrontPage.svelte";
+	import Alternatywki from "./routes/Alternatywki.svelte";
 	export let url = "";
 </script>
 
 <Router {url}>
-	<div>
-	  <Route path="/todo" component={Todo} />
-	  <Route path="/"><Home /></Route>
-	</div>
+	<Route path="/alternatywki" component={Alternatywki} />
+	<Route path="/"><Home /></Route>
 </Router>
