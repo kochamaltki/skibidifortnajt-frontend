@@ -3,6 +3,7 @@
     <h1>Twój Profil</h1>
     <div class="wrapper">
         <img src="sakura.jpg" alt="sakura uwu" class="profilowe">
+        <div class="spacer"></div>
         <div class="tekst">
             <p>Imie: Sakura</p>
             <p>Nazwisko: Miyawaki</p>
@@ -30,7 +31,10 @@
         display: flex;
         justify-content: center;
         align-items: center;
-
-
+        padding: 1px;
+    }
+    .spacer {
+        width: 50px;
+        height: 100px;
     }
 </style>
