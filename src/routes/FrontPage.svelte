@@ -1,8 +1,7 @@
 <script>
-	import { Link , navigate} from "svelte-routing";
+	import { Link } from "svelte-routing";
 	import SearchBar from "../components/SearchBar.svelte";
 	
-
 </script>
 
 <main>
@@ -14,7 +13,6 @@
 	<p>
 		New Jeans here -> <Link to="/alternatywki">About</Link>
     </p>
-	<button on:click={() => navigate("/profil")}>test</button>
 </main>
 
 <style>
