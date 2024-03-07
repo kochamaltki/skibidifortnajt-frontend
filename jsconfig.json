@@ -1,8 +1,0 @@
-{
-	"compilerOptions": {
-		"plugins": [{
-			"name": "typescript-svelte-plugin",
-			"enabled": true
-		}]
-	}
-}
