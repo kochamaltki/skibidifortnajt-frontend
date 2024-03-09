@@ -27,7 +27,7 @@ git commit -m "commit message"
 ```
 
 ### Push your updates and merge them on github.
-You can also delete your branch locally as it is no longer needed (unless you want to further develop said feature).
+You can also delete your branch locally as it is no longer needed (unless you want to further develop said branch).
 ```sh
 git push origin your_branch_name
 ```
