@@ -1,12 +1,11 @@
-<p>
-	placeholder
-</p>
+<script lang="ts">
+
+import Profile from "$components/Profile.svelte";
+
+</script>
+
+<Profile/>
 
 <style lang="scss">
 
-$var: red;
-
-p {
-	color: $var;
-}
 </style>
