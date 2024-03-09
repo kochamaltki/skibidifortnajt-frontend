@@ -2,7 +2,7 @@
 
 export let displayName: string = "displayName";
 export let username: string = "username"
-export let desc: string = "description"
+export let desc: string = "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."
 
 export let backgroundUrl: string = "/images/background.jpg"
 export let profilePictureUrl: string = "/images/profilepicture.jpg"
@@ -10,16 +10,24 @@ export let profilePictureUrl: string = "/images/profilepicture.jpg"
 </script>
 
 <div class="container">
-	<img class="profilepicture" src="{profilePictureUrl}" alt="profilepicture">
-	<h1>{displayName}</h1>
-	<h2>{username}</h2>
-	<p>{desc}</p>
+	<div class="content">
+		<div class="names">
+			<img class="profilepicture" src="{profilePictureUrl}" alt="profilepicture">
+			<h1>{displayName}</h1>
+			<h2>@{username}</h2>
+		</div>
+		<p>{desc}</p>
+		<button>My Profile</button>
+	</div>
 </div>
 
 <style lang="scss">
 
-$maxWidth: 250px;
+$maxWidth: 320px;
+$profilePictureWidth: 90px;
+
 $backgroundColor: #313131;
+$lightGray: #949494;
 
 .container {
 	display: flex;
@@ -29,10 +37,24 @@ $backgroundColor: #313131;
 
 	background-color: $backgroundColor;
 	width: $maxWidth;
+	border-radius: 30px;
+
+	font-weight: normal;
+	text-align: center;
+}
+
+.content {
+	padding: 32px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	row-gap: 38px;
 }
 
 .profilepicture {
-	max-width: $maxWidth - 175;
+	margin: 0px;
+	max-width: $profilePictureWidth;
 
 	border-radius: $maxWidth;
 	border-style: solid;
@@ -42,6 +64,33 @@ $backgroundColor: #313131;
 
 h1 {
 	margin: 0px;
+
+	color: white;
+	font-size: 32px;
+}
+
+h2 {
+	margin: 0px;
+
+	color: $lightGray;
+	font-size: 20px;
+}
+
+p {
+	margin: 0px;
+
+	color: white;
+	font-size: 20px;
+}
+
+button {
+	font-family: inherit;
+	color: $lightGray;
+
+	background-color: #424242;
+	border: none;
+	padding: 12px 70px;
+	border-radius: 10px;
 }
 
 </style>
