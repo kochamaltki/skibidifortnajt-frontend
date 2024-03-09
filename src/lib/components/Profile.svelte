@@ -86,6 +86,7 @@ p {
 
 button {
 	font-family: inherit;
+	font-size: 16px;
 	color: $lightGray;
 
 	background-color: #424242;
@@ -93,9 +94,9 @@ button {
 	padding: 12px 70px;
 	border-radius: 10px;
 
-	transition: 0.5s;
+	transition: 0.4s;
 	&:hover {
-		filter: brightness(140%);
+		filter: brightness(130%);
 	}
 }
 
