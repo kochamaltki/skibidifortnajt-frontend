@@ -44,7 +44,7 @@ If your feature is done and production-ready you can merge your developement bra
 
 # Testing
 ### To make sure your component works remember to write a test for it.
-To create a test for your component create a `Component.test.ts` in the component's directory. An example test checking if the component render would look like this:
+To create a test for your component create a `Component.test.ts` in the component's directory. An example test checking if the component renders would look like this:
 ```ts
 import { describe, expect, it } from 'vitest'
 import { render } from '@testing-library/svelte'
