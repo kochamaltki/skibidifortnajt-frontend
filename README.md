@@ -18,6 +18,10 @@ Make sure you have the newest code to minimize conflicts by first pulling the mo
 git pull origin main
 git branch -b your_branch_name
 ```
+Alternatively you can use the script provided by the repo which pulls the most recent main version and creates a new branch from that:
+```sh
+./new-feature your_branch_name
+```
 
 ### Commit all your changes.
 Make sure you commit your changes frequently. Ideally commit all major changes separately.
