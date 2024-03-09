@@ -1,12 +1,10 @@
-import { afterEach, describe, expect, it } from 'vitest'
-import { cleanup, render } from '@testing-library/svelte'
+import { describe, expect, it } from 'vitest'
+import { render } from '@testing-library/svelte'
 import Profile from './Profile.svelte'
 
 describe('Profile.svelte', () => {
-	afterEach(() => cleanup())
-
 	let name: string = "Test Name";
-	it('mounts', () => {
+	it('renders and has proper values', () => {
 		const { container } = render(Profile, {
 			displayName: name
 		});
