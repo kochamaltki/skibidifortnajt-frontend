@@ -39,7 +39,6 @@ $lightGray: #949494;
 	width: $maxWidth;
 	border-radius: 30px;
 
-	font-weight: normal;
 	text-align: center;
 }
 
@@ -66,6 +65,7 @@ h1 {
 	margin: 0px;
 
 	color: white;
+	font-weight: normal;
 	font-size: 32px;
 }
 
@@ -73,6 +73,7 @@ h2 {
 	margin: 0px;
 
 	color: $lightGray;
+ 	font-weight: normal;
 	font-size: 20px;
 }
 
@@ -91,6 +92,11 @@ button {
 	border: none;
 	padding: 12px 70px;
 	border-radius: 10px;
+
+	transition: 0.5s;
+	&:hover {
+		filter: brightness(140%);
+	}
 }
 
 </style>
