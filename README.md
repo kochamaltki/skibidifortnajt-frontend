@@ -31,20 +31,20 @@ git commit -m "commit message"
 ```
 
 ### Push your updates to github
-You can also delete your branch locally as it is no longer needed (unless you want to further develop said branch).
+To make sure you don't lose your progress you can save it independently of your local machine on github.
 ```sh
 git push origin your_branch_name
 ```
+
+### Merge your branch on github
+If your feature is done and production-ready you can merge your developement branch with the main one on github. Once you've merged your changes you can delete your old branch.
 ```sh
 git branch --delete your_branch_name
 ```
 
-### Merge your branch on github
-If your feature is done and production-ready you can merge your developement branch with the main one on github.
-
 # Testing
 ### To make sure your component works remember to write a test for it
-To create a test for your component create a `Component.test.ts` in the component's directory. An example test checking if the component renders would look like this:
+To create a test for your component create a `Component.test.ts` file in the component's directory. An example test checking if the component renders would look like this:
 ```ts
 import { describe, expect, it } from 'vitest'
 import { render } from '@testing-library/svelte'
