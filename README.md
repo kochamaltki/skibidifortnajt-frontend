@@ -30,7 +30,7 @@ git add .
 git commit -m "commit message"
 ```
 
-### Push your updates and merge them on github.
+### Push your updates to github
 You can also delete your branch locally as it is no longer needed (unless you want to further develop said branch).
 ```sh
 git push origin your_branch_name
@@ -38,6 +38,9 @@ git push origin your_branch_name
 ```sh
 git branch --delete your_branch_name
 ```
+
+### Merge your branch on github
+If your feature is done and production-ready you can merge your developement branch with the main one on github.
 
 # Epik prodżekt na informatik in Staszyc
 ![screenshot](./.github/screenshot.png)
