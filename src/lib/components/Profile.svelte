@@ -19,6 +19,7 @@ export let profilePictureUrl: string = "/images/profilepicture.jpg"
 		<p>{desc}</p>
 		<button>My Profile</button>
 	</div>
+	<img class="backgroundimage" src="{backgroundUrl}" alt="background">
 </div>
 
 <style lang="scss">
@@ -30,6 +31,8 @@ $backgroundColor: #313131;
 $lightGray: #949494;
 
 .container {
+	padding-top: 50px;
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -42,6 +45,17 @@ $lightGray: #949494;
 	text-align: center;
 }
 
+.backgroundimage {
+	position: absolute;
+	width: inherit;
+	object-fit: cover;
+	top: 0;
+	height: 140px;
+
+	z-index: 0;
+	border-radius: 30px 30px 0px 0px;
+}
+
 .content {
 	padding: 32px;
 	display: flex;
@@ -49,6 +63,7 @@ $lightGray: #949494;
 	align-items: center;
 
 	row-gap: 38px;
+	z-index: 1;
 }
 
 .profilepicture {
