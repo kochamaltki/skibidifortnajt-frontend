@@ -3,7 +3,7 @@
 
 	export let displayName: string = "displayName";
 	export let username: string = "username";
-	export let content: string = "ALEKSANDER KLIK"
+	export let content: string = "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."
 
 	export let timePosted: number = 0;
 
@@ -15,13 +15,10 @@
 </script>
 
 <div class="container">
-	<div class="left">
-		<img class="profilepicture" src="{profilePictureUrl}" alt="profilepicture">
-		<div class="divider"></div>
-	</div>
 	<div class="content">
 		<div class="header">
 			<div class="profile">
+				<img class="profilepicture" src="{profilePictureUrl}" alt="profilepicture">
 				<div class="names">
 					<h1>{displayName}</h1>
 					<p>@{username}</p>
@@ -31,11 +28,13 @@
 				{format(timePosted)}
 			</p>
 		</div>
-
-		<div class="postcontent">
-			<h2>
-				{content}
-			</h2>
+		<div class="body">
+			<div class="divider">|</div>
+			<div class="postcontent">
+				<h2>
+					{content}
+				</h2>
+			</div>
 		</div>
 	</div>
 </div>
@@ -44,19 +43,13 @@
 	$profilePictureWidth: 4rem;
 	$lightGray: #949494;
 
-	.left {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		row-gap: 2rem;
-	}
-
 	.container {
 		background-color: #313131;
 		padding: 2rem;
 		border-radius: 30px;
 
 		display: flex;
+		flex-direction: column;
 		column-gap: 0rem;
 	}
 
@@ -69,8 +62,19 @@
 	.header {
 		display: flex;
 		justify-content: space-between;
-		align-items: flex-start;
-		margin-left: 1rem;
+	}
+
+	.body {
+		display: flex;
+	}
+
+	.divider {
+		background-color: $lightGray;
+		color: transparent;
+
+		width: 0px;
+		padding: .0625rem;
+		margin: .5rem 2rem .5rem 1.65rem;
 	}
 
 	p {
@@ -95,7 +99,6 @@
 		font-size: 1.25rem;
 	}
 
-
 	.profile {
 		display: flex;
 		column-gap: 1em;
@@ -117,10 +120,4 @@
 		padding: .5em;
 	}
 
-	.divider {
-		width: 2px;
-		height: 100%;
-
-		background-color: $lightGray;
-	}
 </style>
