@@ -22,6 +22,7 @@ Alternatively you can use the script provided by the repo which pulls the most r
 ```sh
 ./new-feature your_branch_name
 ```
+The script above will also create a `.featuredata` file to save the branch name and allow you to use the two other scripts.
 
 ### Commit all your changes
 Make sure you commit your changes frequently. Ideally commit all major changes separately.
@@ -35,11 +36,19 @@ To make sure you don't lose your progress you can save it independently of your 
 ```sh
 git push origin your_branch_name
 ```
+Instead you can run the push script which will allow you to not remember the branch name. (only if you used ./new-feature)
+```sh
+./push-feature
+```
 
 ### Merge your branch on github
 If your feature is done and production-ready you can merge your developement branch with the main one on github. Once you've merged your changes you can delete your old branch.
 ```sh
 git branch --delete your_branch_name
+```
+You can also use the provided script if you don't want to remember the branch name. (only if you used ./new-feature)
+```sh
+./delete-branch
 ```
 
 # Testing
