@@ -71,7 +71,7 @@
 		margin: 0px;
 		max-width: $profilePictureWidth;
 
-		border-radius: $maxWidth;
+		border-radius: $profilePictureWidth;
 		border-style: solid;
 		border-width: 0.5rem;
 		border-color: $backgroundColor;
