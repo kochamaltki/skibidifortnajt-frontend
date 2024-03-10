@@ -7,4 +7,5 @@ then
 else
 	git checkout main
 	git branch -D "$BRANCH"
+	rm .featuredata
 fi
