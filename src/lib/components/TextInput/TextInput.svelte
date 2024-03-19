@@ -3,19 +3,17 @@
 	export let input: string = "";
 </script>
 
-<form>
-	<div class="search">
-		<div class="icon">
-			<slot name="left">
-			</slot>
-		</div>
-		<input class="search-input" type="search" placeholder={placeholder} bind:value={input}>
-		<div class="icon">
-			<slot name="right">
-			</slot>
-		</div>
+<div class="search">
+	<div class="icon">
+		<slot name="left">
+		</slot>
 	</div>
-</form>
+	<input class="search-input" type="search" placeholder={placeholder} bind:value={input}>
+	<div class="icon">
+		<slot name="right">
+		</slot>
+	</div>
+</div>
 
 <style lang="scss">
 	$background: #222222;
@@ -25,7 +23,7 @@
 	.search {
 		display: flex;
 		align-items: center;
-		justify-content: space-evenly;
+		justify-content: space-between;
 		column-gap: $padding;
 		background-color: $background;
 		padding: $padding;
