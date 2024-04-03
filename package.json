@@ -8,7 +8,8 @@
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"test": "vitest run"
+		"test": "vitest run",
+		"host": "vite dev --host"
 	},
 	"devDependencies": {
 		"@fontsource-variable/outfit": "^5.0.12",
