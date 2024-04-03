@@ -10,6 +10,10 @@ To locally host the website run the following commands:
 ```sh
 npm run dev
 ```
+To host the website and expose it to the web run:
+```sh
+npm run host
+```
 
 # Contributing
 ### Create a branch for the feature you want to add and name it accordingly
