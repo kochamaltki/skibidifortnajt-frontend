@@ -65,7 +65,7 @@ import Component from './Component.svelte'
 
 describe('Component.svelte', () => {
 	it('check if the component renders', () => {
-		const { container } = render(Profile);
+		const { container } = render(Component);
 		expect(container).toBeTruthy();
 	})
 })
