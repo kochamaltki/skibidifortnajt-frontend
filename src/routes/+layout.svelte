@@ -2,10 +2,17 @@
 	import '@fontsource-variable/outfit'
 </script>
 
-<slot/>
+<div class="container">
+	<slot/>
+</div>
 
 <style lang="scss">
 	:global(html) {
 		font-family: 'Outfit Variable', sans-serif;
+		color: #f0f0f0;
+	}
+
+	:global(body) {
+		background-color: #111215;
 	}
 </style>
