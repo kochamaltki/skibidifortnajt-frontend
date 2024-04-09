@@ -24,9 +24,9 @@ git branch -b your_branch_name
 ```
 Alternatively you can use the script provided by the repo which pulls the most recent main version and creates a new branch from that:
 ```sh
-./new-feature your_branch_name
+./new-branch your_branch_name
 ```
-The script above will also create a `.featuredata` file to save the branch name and allow you to use the two other scripts.
+The script above will also create a `.branchdata` file to save the branch name and allow you to use the two other scripts.
 
 ### Commit all your changes
 Make sure you commit your changes frequently. Ideally commit all major changes separately.
@@ -40,9 +40,9 @@ To make sure you don't lose your progress you can save it independently of your 
 ```sh
 git push origin your_branch_name
 ```
-Instead you can run the push script which will allow you to not remember the branch name. (only if you used ./new-feature)
+Instead you can run the push script which will allow you to not remember the branch name. (only if you used ./new-branch)
 ```sh
-./push-feature
+./push-branch
 ```
 
 ### Merge your branch on github
@@ -50,7 +50,7 @@ If your feature is done and production-ready you can merge your developement bra
 ```sh
 git branch --delete your_branch_name
 ```
-You can also use the provided script if you don't want to remember the branch name. (only if you used ./new-feature)
+You can also use the provided script if you don't want to remember the branch name. (only if you used ./new-branch)
 ```sh
 ./delete-branch
 ```
