@@ -159,6 +159,7 @@
 	.profile-pic {
 		max-width: 60px;
 		border-radius: 30px;
+		user-select: none;
 	}
 
 	.stat {

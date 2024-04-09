@@ -9,5 +9,6 @@
 	.container {
 		all: unset;
 		cursor: pointer;
+		user-select: none;
 	}
 </style>
