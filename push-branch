@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-BRANCH=$(cat .featuredata)
+BRANCH=$(cat .branchdata)
 if [ -z "$BRANCH" ]
 then
 	echo "Please run the ./new-feature script first."
