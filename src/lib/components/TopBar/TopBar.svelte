@@ -1,0 +1,120 @@
+<script lang="ts">
+    export let profilePictureUrl: string = "/images/profilepicture.jpg"
+    import TextInput from "$components/TextInput/TextInput.svelte";
+    let flaga: boolean = true;
+</script>
+
+<div class="bar">
+    <div class="logo">
+        <h1>Logo</h1>
+    </div>
+    <TextInput>
+    </TextInput>
+    {#if flaga == true}
+        <div class="right-logged">
+            <div class="create">
+                <button>Create</button>
+            </div>
+            <img src="{profilePictureUrl}" alt="profilowe" class="profilepicture">
+        </div>
+    {:else}
+        <div class="right-signup">
+            <div class="signup">
+                <button>Sign up</button>
+            </div>
+            <div class="login">
+                <button>Log in</button>
+            </div>
+        </div>
+    {/if}
+</div>
+
+<style lang="scss">
+    $bg: #181B29;
+    $fg: #F0F0F0;
+    $red: #FF4655;
+    $maxWidth: 60px;
+    .bar{
+        position: fixed;
+        right: 0;
+        left: 0;
+        top: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: $bg;
+        width: 1920px;
+        height: 100px;
+        margin: 0px;
+    }
+    .logo{
+        h1{
+            color: $fg;
+            font-size: 48px;
+            padding-top: 20px;
+            padding-left: 40px;
+            padding-bottom: 20px;
+        }
+    }
+    .right-logged{
+        display: flex;
+        align-items: center;
+        padding-top: 20px;
+        padding-right: 40px;
+        padding-bottom: 20px;
+        column-gap: 40px;
+    }
+    .right-signup{
+        display: flex;
+        align-items: center;
+        padding-top: 20px;
+        padding-right: 40px;
+        padding-bottom: 20px;
+        column-gap: 40px;
+    }
+    .profilepicture{
+        max-width: $maxWidth;
+        border-radius: $maxWidth;
+    }
+    .create{
+        button{
+            border: none;
+            background-color: $red;
+            color: $fg;
+            font-weight: bold;
+            font-size: 24px;
+            width: 150px;
+            height: 50px;
+            border-radius: 30px;
+            font-family: inherit;
+        }
+    }
+    .signup{
+        button{
+            border: none;
+            background-color: $red;
+            color: $fg;
+            font-weight: bold;
+            font-size: 24px;
+            width: 150px;
+            height: 50px;
+            border-radius: 30px;
+            font-family: inherit;
+        }
+    }
+    .login{
+        button{
+            border: none;
+            background-color: $red;
+            color: $fg;
+            font-weight: bold;
+            font-size: 24px;
+            width: 150px;
+            height: 50px;
+            border-radius: 30px;
+            font-family: inherit;
+        }
+    }
+
+</style>
+
