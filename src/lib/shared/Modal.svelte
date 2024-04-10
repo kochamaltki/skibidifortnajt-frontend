@@ -37,9 +37,13 @@
 		display: flex;
 	 	justify-content: center;
 		align-items: center;
+
+		// Needed because otherwise likes are rendered over the blur???
+		z-index: 9;
 	}
 
 	.container {
+		z-index: 99;
 		cursor: auto;
 		user-select: text;
 	}
