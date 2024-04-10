@@ -3,24 +3,21 @@
 	import { scale } from 'svelte/transition'
 	import { elasticOut } from 'svelte/easing'
 
-	import Card from "./Card.svelte";
-	import Clickable from './Clickable.svelte';
-
-	export let displayName: string = "Username";
-	export let content: string = "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident. Nostrud officia pariatur ut officia. Sit irure elit esse ea nulla sunt ex occaecat reprehenderit commodo officia dolor Lorem duis laboris cupidatat officia voluptate. Culpa proident adipisicing id nulla nisi laboris ex in Lorem sunt duis officia eiusmod. Aliqua reprehenderit commodo ex non excepteur duis sunt velit enim. Voluptate laboris sint cupidatat ullamco ut ea consectetur et est culpa et culpa duis.";
+	import Card from '$lib/shared/Card.svelte';
+	import Clickable from '$lib/shared/Clickable.svelte';
 
 	const getRandomProiflePicture = () => {
 		let index: number = Math.floor(Math.random() * 10);
 		return `/images/altki/altka${index}.png`;
 	}
 
+	export let displayName: string = "Username";
+	export let content: string = "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident. Nostrud officia pariatur ut officia. Sit irure elit esse ea nulla sunt ex occaecat reprehenderit commodo officia dolor Lorem duis laboris cupidatat officia voluptate. Culpa proident adipisicing id nulla nisi laboris ex in Lorem sunt duis officia eiusmod. Aliqua reprehenderit commodo ex non excepteur duis sunt velit enim. Voluptate laboris sint cupidatat ullamco ut ea consectetur et est culpa et culpa duis.";
 	export let profilePictureUrl: string = getRandomProiflePicture();
 
 	export let datePosted: number = 0;
-
 	export let likeCount: number = 0;
 	export let commentCount: number = 0;
-
 	export let postId: number = -1;
 
 	export let liked: boolean = false;
@@ -51,13 +48,15 @@
 <Card>
 	<div class="container">
 		<div class="top">
-			<div class="profile">
-				<img src="{profilePictureUrl}" alt="profile-pic" class="profile-pic">
-				<div class="username">
-					<h1>{displayName}</h1>
-					<p>{format(datePosted)}</p>
+			<Clickable>
+				<div class="profile">
+					<img src="{profilePictureUrl}" alt="profile-pic" class="profile-pic">
+					<div class="username">
+						<h1>{displayName}</h1>
+						<p>{format(datePosted)}</p>
+					</div>
 				</div>
-			</div>
+			</Clickable>
 			<div class="post-settings">
 				<Clickable>
 					<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="ellipsis-v"><path fill="#474c63" d="M12,7a2,2,0,1,0-2-2A2,2,0,0,0,12,7Zm0,10a2,2,0,1,0,2,2A2,2,0,0,0,12,17Zm0-7a2,2,0,1,0,2,2A2,2,0,0,0,12,10Z"></path></svg>
@@ -88,11 +87,9 @@
 					</div>
 				</Clickable>
 			</div>
-			<div class="share">
-				<Clickable on:click={copyPostUrl}>
-					<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="share-alt"><path fill="#f0f0f0" d="M18,14a4,4,0,0,0-3.08,1.48l-5.1-2.35a3.64,3.64,0,0,0,0-2.26l5.1-2.35A4,4,0,1,0,14,6a4.17,4.17,0,0,0,.07.71L8.79,9.14a4,4,0,1,0,0,5.72l5.28,2.43A4.17,4.17,0,0,0,14,18a4,4,0,1,0,4-4ZM18,4a2,2,0,1,1-2,2A2,2,0,0,1,18,4ZM6,14a2,2,0,1,1,2-2A2,2,0,0,1,6,14Zm12,6a2,2,0,1,1,2-2A2,2,0,0,1,18,20Z"></path></svg>
-				</Clickable>
-			</div>
+			<Clickable on:click={copyPostUrl}>
+				<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="share-alt"><path fill="#f0f0f0" d="M18,14a4,4,0,0,0-3.08,1.48l-5.1-2.35a3.64,3.64,0,0,0,0-2.26l5.1-2.35A4,4,0,1,0,14,6a4.17,4.17,0,0,0,.07.71L8.79,9.14a4,4,0,1,0,0,5.72l5.28,2.43A4.17,4.17,0,0,0,14,18a4,4,0,1,0,4-4ZM18,4a2,2,0,1,1-2,2A2,2,0,0,1,18,4ZM6,14a2,2,0,1,1,2-2A2,2,0,0,1,6,14Zm12,6a2,2,0,1,1,2-2A2,2,0,0,1,18,20Z"></path></svg>
+			</Clickable>
 		</div>
 	</div>
 </Card>
