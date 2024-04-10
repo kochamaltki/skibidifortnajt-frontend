@@ -1,6 +1,7 @@
 <script lang="ts">
     export let profilePictureUrl: string = "/images/profilepicture.jpg"
     import TextInput from "$components/TextInput/TextInput.svelte";
+    import Clickable from "$components/Clickable.svelte";
     let flaga: boolean = true;
 </script>
 
@@ -12,10 +13,14 @@
     </TextInput>
     {#if flaga == true}
         <div class="right-logged">
-            <div class="create">
-                <button>Create</button>
-            </div>
-            <img src="{profilePictureUrl}" alt="profilowe" class="profilepicture">
+            <Clickable>
+                <div class="create">
+                    <h1>Create</h1>
+                </div>
+            </Clickable>
+            <Clickable>
+                <img src="{profilePictureUrl}" alt="profilowe" class="profilepicture">
+            </Clickable>
         </div>
     {:else}
         <div class="right-signup">
@@ -77,7 +82,10 @@
         border-radius: $maxWidth;
     }
     .create{
-        button{
+        h1{
+            display: flex;
+            align-items: center;
+            justify-content: center;
             border: none;
             background-color: $red;
             color: $fg;
