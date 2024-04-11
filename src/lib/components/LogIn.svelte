@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Modal from "$lib/shared/Modal.svelte";
-	import Clickable from "$lib/shared/Clickable.svelte";
 	import Button from "$lib/shared/Button.svelte";
 
 	let showModal: boolean = true;
@@ -9,43 +8,57 @@
 </script>
 
 <Modal bind:showModal={showModal}>
-	<form on:submit={(e) => alert(e)}>
+	<form on:submit={(e) => alert("submit")}>
 		<div class="container">
-			<div class="top">
-				<h1>Log In</h1>
-				<Clickable on:click={() => { showModal = false }}>
-					<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="times"><path fill="#474c63" d="M13.41,12l4.3-4.29a1,1,0,1,0-1.42-1.42L12,10.59,7.71,6.29A1,1,0,0,0,6.29,7.71L10.59,12l-4.3,4.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l4.29,4.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z"></path></svg>
-				</Clickable>
-			</div>
-			<!-- input fields here -->
+			<h1>Log In</h1>
+
 			<div class="input">
-				<input type="text" placeholder="Username">
-				<input type={showPassword ? "text" : "password"} placeholder="Password">
+				<div class="input-box">
+					<input type="text" placeholder="Username" required>
+					<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="user"><path fill="#181b29" d="M15.71,12.71a6,6,0,1,0-7.42,0,10,10,0,0,0-6.22,8.18,1,1,0,0,0,2,.22,8,8,0,0,1,15.9,0,1,1,0,0,0,1,.89h.11a1,1,0,0,0,.88-1.1A10,10,0,0,0,15.71,12.71ZM12,12a4,4,0,1,1,4-4A4,4,0,0,1,12,12Z"></path></svg>
+				</div>
+				<div class="input-box">
+					<input type={showPassword ? "text" : "password"} placeholder="Password" required>
+					<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="lock"><path fill="#181b29" d="M17,9V7A5,5,0,0,0,7,7V9a3,3,0,0,0-3,3v7a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V12A3,3,0,0,0,17,9ZM9,7a3,3,0,0,1,6,0V9H9Zm9,12a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V12a1,1,0,0,1,1-1H17a1,1,0,0,1,1,1Z"></path></svg>
+				</div>
+			</div>
+
+			<div class="input">
+				<Button type="submit" big={true} disabled={!hasValidInput} style={hasValidInput ? "accent" : "background"}>
+					Continue
+				</Button>
+
 				<p>Don't have an account? <a href="#">Sign up</a></p>
 			</div>
-			<Button big={true} disabled={!hasValidInput} style={hasValidInput ? "accent" : "background"}>
-				Continue
-			</Button>
 		</div>
 	</form>
 </Modal>
 
 <style lang="scss">
 	input {
-		width: 500px - 100px;
+		width: 100%;
 		outline: none;
 		border: none;
-		border-radius: 100px;
 
-		font-size: 24px;
-		padding: 15px 30px;
+		font-size: 20px;
 
-		background-color: #111215;
+		background: transparent;
 		color: #f0f0f0;
 		
 		&::placeholder {
 			color: #181b29;
 		}
+	}
+
+	.input-box {
+		width: 500px - 100px;
+		background-color: #111215;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		padding: 15px 30px;
+		border-radius: 100px;
 	}
 
 	a {
@@ -61,6 +74,7 @@
 	}
 
 	.input {
+		width: 100%;
 		display: flex;
 		flex-direction: column;
 		gap: 20px;
@@ -71,13 +85,8 @@
 		width: 500px - 40px;
 		display: flex;
 		flex-direction: column;
-		gap: 60px;
-	}
-
-	.top {
-		display: flex;
-		justify-content: space-between;
 		align-items: center;
+		gap: 60px;
 	}
 
 	.icon {
