@@ -2,9 +2,10 @@
 	export let style: string = "accent";
 	export let big: boolean = false;
 	export let disabled: boolean = false;
+	export let type: "button"|"submit"|"reset"|null|undefined  = undefined;
 </script>
 
-<button class="container {style}" class:big={big} class:disabled={disabled} on:click>
+<button type={type} class="container {style}" class:big={big} class:disabled={disabled} on:click>
 	<slot/>
 </button>
 
