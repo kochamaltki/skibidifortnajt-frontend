@@ -2,7 +2,6 @@
     import TopBar from "$components/TopBar.svelte";
 </script>
 
-<TopBar/>
 <div class="container">
 </div>
 
