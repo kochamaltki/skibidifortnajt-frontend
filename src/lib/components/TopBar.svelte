@@ -1,7 +1,7 @@
 <script lang="ts">
     export let profilePictureUrl: string = "/images/profilepicture.jpg"
     import TextInput from "$components/TextInput.svelte";
-    import Clickable from "$shared/Clickable.svelte";
+    import Clickable from "$lib/shared/Clickable.svelte";
     let flaga: boolean = true;
 </script>
 <header>
@@ -41,7 +41,6 @@
     $red: #FF4655;
     $maxWidth: 60px;
     .bar{
-        position: fixed;
         right: 0;
         left: 0;
         top: 0;
