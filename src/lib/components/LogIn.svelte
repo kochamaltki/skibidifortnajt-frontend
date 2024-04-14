@@ -7,11 +7,14 @@
 	let showModal: boolean = true;
 	let hasValidInput: boolean = true;
 
+	$: hasValidInput = usernameInput != "" && passwordInput != "";
+
 	let usernameInput: string = ""
 	let passwordInput: string = ""
 
 	const logIn = async (username: string, password: string) => {
-		fetch(apiUrl + "/api/post/login", {
+		let endpoint: string = apiUrl + "/api/post/login";
+		fetch(endpoint, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -29,7 +32,7 @@
 </script>
 
 <Modal bind:showModal={showModal}>
-	<form on:submit={() => logIn(usernameInput, passwordInput)}>
+	<form on:submit|preventDefault={() => logIn(usernameInput, passwordInput)}>
 		<div class="container">
 			<h1>Log In</h1>
 
@@ -49,7 +52,7 @@
 					Continue
 				</Button>
 
-				<p>Don't have an account? <a href="#">Sign up</a></p>
+				<p>Don't have an account? <a href="/">Sign up</a></p>
 			</div>
 		</div>
 	</form>
