@@ -29,6 +29,8 @@
         width: 608px;
         height: 28px;
 		transition: filter .25s;
+		margin-top: 20px;
+		margin-bottom: 20px;
 
 		&:hover {
 			filter: brightness(130%);

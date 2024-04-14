@@ -4,7 +4,7 @@
     import Clickable from "$components/Clickable.svelte";
     let flaga: boolean = true;
 </script>
-
+<header>
 <div class="bar">
     <div class="logo">
         <h1>Logo</h1>
@@ -33,6 +33,7 @@
         </div>
     {/if}
 </div>
+</header>
 
 <style lang="scss">
     $bg: #181B29;
@@ -48,8 +49,7 @@
         justify-content: space-between;
         align-items: center;
         background-color: $bg;
-        width: 1920px;
-        height: 100px;
+        width: 100%;
         margin: 0px;
     }
     .logo{
@@ -59,14 +59,15 @@
             padding-top: 20px;
             padding-left: 40px;
             padding-bottom: 20px;
+            margin: 0px;
         }
     }
     .right-logged{
         display: flex;
         align-items: center;
-        padding-top: 20px;
-        padding-right: 40px;
-        padding-bottom: 20px;
+        //padding-top: 20px;
+        //padding-right: 40px;
+        //padding-bottom: 20px;
         column-gap: 40px;
     }
     .right-signup{
@@ -80,6 +81,9 @@
     .profilepicture{
         max-width: $maxWidth;
         border-radius: $maxWidth;
+        margin-top: 18px;
+        margin-right: 40px;
+        margin-bottom: 18px;
     }
     .create{
         h1{
@@ -94,6 +98,8 @@
             width: 150px;
             height: 50px;
             border-radius: 30px;
+            margin-top: 25px;
+            margin-bottom: 25px;
             font-family: inherit;
         }
     }
