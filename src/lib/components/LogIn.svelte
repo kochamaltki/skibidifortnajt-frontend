@@ -2,7 +2,7 @@
 	import Modal from "$lib/shared/Modal.svelte";
 	import Button from "$lib/shared/Button.svelte";
 
-	export let apiUrl: string = "http://localhost:8000";
+	export let apiUrl: string = "http://localhost:8000"//"http://51.20.92.147:8000";
 
 	let showModal: boolean = true;
 	let hasValidInput: boolean = true;
@@ -14,7 +14,7 @@
 
 	const logIn = async (username: string, password: string) => {
 		let endpoint: string = apiUrl + "/api/post/login";
-		fetch(endpoint, {
+		let res = await fetch(endpoint, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -23,11 +23,9 @@
 				user_name: username,
 				passwd: password
 			})
-		}).then(res => {
-			return res.json()
-		}).then(data => {
-			console.log(data)
 		});
+		let data = res.json();
+		console.log(data);
 	}
 </script>
 
