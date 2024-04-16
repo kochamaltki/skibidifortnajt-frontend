@@ -3,7 +3,7 @@
 	import Button from "$lib/shared/Button.svelte";
 	import Input from "$lib/shared/Input.svelte";
 
-	export let apiUrl: string = "http://0.0.0.0:8000";
+	export let apiUrl: string = "http://localhost:8000";
 
 	let showModal: boolean = true;
 	let hasValidInput: boolean = true;
@@ -13,10 +13,13 @@
 	let usernameInput: string = ""
 	let passwordInput: string = ""
 
+	let error: boolean = false;
+	let errorMessage: string = "";
+
 	const logIn = async (username: string, password: string) => {
-		alert("login");
 		let endpoint: string = apiUrl + "/api/post/login";
-		let res = await fetch(endpoint, {
+		fetch(endpoint, {
+			credentials: "include",
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -25,8 +28,20 @@
 				user_name: username,
 				passwd: password
 			})
+		})
+		.then(response => {
+			if (response.ok) {
+				error = false;
+			}
+			else {
+				throw new Error("eror");
+			}
+		})
+		.catch(err => {
+			error = true;
+			errorMessage = err;
+			passwordInput = usernameInput = "";
 		});
-		console.log(res);
 	}
 </script>
 
@@ -49,6 +64,10 @@
 					Continue
 				</Button>
 
+				{#if {error}}
+					<h2> {errorMessage} </h2>
+				{/if}
+
 				<p>Don't have an account? <a href="/">Sign up</a></p>
 			</div>
 		</div>
@@ -62,6 +81,14 @@
 		&:hover {
 			text-decoration: underline;
 		}
+	}
+
+	h2 {
+		color: #ff4655;
+		margin: 0;
+		padding: 0;
+		text-align: center;
+		font-size: 24px;
 	}
 
 	p {
