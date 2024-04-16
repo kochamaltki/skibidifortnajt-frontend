@@ -2,6 +2,7 @@
 	import Modal from "$lib/shared/Modal.svelte";
 	import Button from "$lib/shared/Button.svelte";
 	import Input from "$lib/shared/Input.svelte";
+	import userStore from "../../stores/userStore";
 
 	export let apiUrl: string = "http://localhost:8000";
 
@@ -16,9 +17,19 @@
 	let error: boolean = false;
 	let errorMessage: string = "";
 
+	const profileFromUsername = async (username: string) => {
+		let res = await fetch(apiUrl + "/api/get/user/id/" + username);
+		let id = await res.json();
+
+		res = await fetch(apiUrl + "/api/get/profile/by-id/" + id);
+		let data: any = await res.json();
+
+		return data;
+	}
+
 	const logIn = async (username: string, password: string) => {
 		let endpoint: string = apiUrl + "/api/post/login";
-		fetch(endpoint, {
+		await fetch(endpoint, {
 			credentials: "include",
 			method: "POST",
 			headers: {
@@ -29,9 +40,17 @@
 				passwd: password
 			})
 		})
-		.then(response => {
+		.then(async response => {
 			if (response.ok) {
 				error = false;
+				$userStore.username = username;
+
+				let user = await profileFromUsername(username);
+				$userStore.id = user.user_id;
+				$userStore.displayName = user.display_name;
+				$userStore.description = user.description;
+
+				$userStore.loggedIn = true;
 			}
 			else {
 				throw new Error("eror");
@@ -49,7 +68,6 @@
 	<form on:submit|preventDefault={() => logIn(usernameInput, passwordInput)}>
 		<div class="container">
 			<h1>Log In</h1>
-
 			<div class="input width-style">
 				<Input placeholder="Username" required={true} bind:input={usernameInput}>
 					<svg slot="right" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="user"><path fill="#313646" d="M15.71,12.71a6,6,0,1,0-7.42,0,10,10,0,0,0-6.22,8.18,1,1,0,0,0,2,.22,8,8,0,0,1,15.9,0,1,1,0,0,0,1,.89h.11a1,1,0,0,0,.88-1.1A10,10,0,0,0,15.71,12.71ZM12,12a4,4,0,1,1,4-4A4,4,0,0,1,12,12Z"></path></svg>
