@@ -14,8 +14,9 @@
 	let passwordInput: string = ""
 
 	const logIn = async (username: string, password: string) => {
+		alert("login");
 		let endpoint: string = apiUrl + "/api/post/login";
-		fetch(endpoint, {
+		let res = await fetch(endpoint, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -24,7 +25,8 @@
 				user_name: username,
 				passwd: password
 			})
-		}).then(res => {return res.json}).then(data => console.log(data))
+		});
+		console.log(res);
 	}
 </script>
 
