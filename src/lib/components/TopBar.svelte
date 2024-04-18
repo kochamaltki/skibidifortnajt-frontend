@@ -18,8 +18,8 @@
 			<!-- TODO: Add user profile picture from the store -->
 			<Button>Create</Button>
 		{:else}
-			<Button>Sign Up</Button>
-			<Button on:click={userStore.toggleLoginPrompt}>Log In</Button>
+			<Button on:click={userStore.toggleSignUpPrompt}>Sign Up</Button>
+			<Button on:click={userStore.toggleLogInPrompt}>Log In</Button>
 		{/if}
 	</div>
 </div>

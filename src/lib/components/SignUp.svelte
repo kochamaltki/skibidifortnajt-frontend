@@ -15,40 +15,15 @@
 	let error: boolean = false;
 	let errorMessage: string = "";
 
-	const logIn = async (username: string, password: string) => {
-		let endpoint: string = apiUrl + "/api/post/login";
-		await fetch(endpoint, {
-			credentials: "include",
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({
-				user_name: username,
-				passwd: password
-			})
-		})
-		.then(async response => {
-			if (response.ok) {
-				error = false;
-				userStore.logInWithUsername(username);
-			}
-			else {
-				throw new Error(String(response.status + ": " + response.body));
-			}
-		})
-		.catch(err => {
-			error = true;
-			errorMessage = err;
-			passwordInput = usernameInput = "";
-		});
+	const signUp = async (username: string, password: string) => {
+	
 	}
 </script>
 
-<Modal bind:showModal={$userStore.showLogInPrompt}>
-	<form on:submit|preventDefault={() => logIn(usernameInput, passwordInput)}>
+<Modal bind:showModal={$userStore.showSignUpPrompt}>
+	<form on:submit|preventDefault={() => signUp(usernameInput, passwordInput)}>
 		<div class="container">
-			<h1>Log In</h1>
+			<h1>Sign Up</h1>
 			<div class="input width-style">
 				<Input placeholder="Username" required={true} bind:input={usernameInput}>
 					<svg slot="right" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="user"><path fill="#313646" d="M15.71,12.71a6,6,0,1,0-7.42,0,10,10,0,0,0-6.22,8.18,1,1,0,0,0,2,.22,8,8,0,0,1,15.9,0,1,1,0,0,0,1,.89h.11a1,1,0,0,0,.88-1.1A10,10,0,0,0,15.71,12.71ZM12,12a4,4,0,1,1,4-4A4,4,0,0,1,12,12Z"></path></svg>
@@ -67,7 +42,7 @@
 					<h2> {errorMessage} </h2>
 				{/if}
 
-				<p>Don't have an account? <a href="/">Sign up</a></p>
+				<p>Already have an account? <a href="/">Log in</a></p>
 			</div>
 		</div>
 	</form>

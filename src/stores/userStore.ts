@@ -4,7 +4,8 @@ import apiUrl from "./apiUrl";
 export function createUserStore(apiUrl: string) {
 	const loginData = writable({
 		loggedIn:  false,
-		showLoginPrompt: false,
+		showLogInPrompt: false,
+		showSignUpPrompt: false
 	});
 
 	const userData = writable({
@@ -27,7 +28,8 @@ export function createUserStore(apiUrl: string) {
 
 		loginData.set({
 			loggedIn: true,
-			showLoginPrompt: false
+			showLogInPrompt: false,
+			showSignUpPrompt: false,
 		})
 	}
 
@@ -38,10 +40,21 @@ export function createUserStore(apiUrl: string) {
 		return logInWithId(id);
 	}
 
-	function toggleLoginPrompt() {
+	function toggleLogInPrompt() {
 		loginData.update(data => {
-			console.log(data.showLoginPrompt)
-			return {...data, showLoginPrompt: !data.showLoginPrompt};
+			return {...data,
+				showLogInPrompt: !data.showLogInPrompt,
+				showSignUpPrompt: false
+			};
+		})
+	}
+
+	function toggleSignUpPrompt() {
+		loginData.update(data => {
+			return {...data,
+				showSignUpPrompt: !data.showSignUpPrompt,
+				showLogInPrompt: false
+			};
 		})
 	}
 
@@ -50,9 +63,10 @@ export function createUserStore(apiUrl: string) {
 		...loginData,
 		logInWithId,
 		logInWithUsername,
-		toggleLoginPrompt
+		toggleLogInPrompt,
+		toggleSignUpPrompt
 	};
 }
 
 
-export const userStore = createUserStore(apiUrl);
+export const userStore = createUserStore(apiUrl)

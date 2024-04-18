@@ -1,6 +1,8 @@
 <script lang="ts">
 	import '@fontsource-variable/outfit'
+
 	import LogIn from "$components/LogIn.svelte";
+	import SignUp from '$components/SignUp.svelte';
 	import TopBar from '$components/TopBar.svelte';
 </script>
 
@@ -9,6 +11,8 @@
 		<TopBar/>
 	</header>
 	<slot/>
+
+	<SignUp/>
 	<LogIn/>
 </div>
 
