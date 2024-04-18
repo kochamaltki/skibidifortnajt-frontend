@@ -4,6 +4,7 @@
 	import TopBar from '$components/TopBar.svelte';
 
 	import apiUrl from "../stores/apiUrl";
+	import { userStore } from '../stores/userStore';
 </script>
 
 <div class="container">
@@ -11,7 +12,7 @@
 		<TopBar/>
 	</header>
 	<slot/>
-	<LogIn {apiUrl}/>
+	<LogIn {apiUrl} bind:showModal={$userStore.showLoginPrompt}/>
 </div>
 
 <style lang="scss">
