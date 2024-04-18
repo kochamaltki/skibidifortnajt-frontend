@@ -2,9 +2,9 @@
 	import Modal from "$lib/shared/Modal.svelte";
 	import Button from "$lib/shared/Button.svelte";
 	import Input from "$lib/shared/Input.svelte";
-	import userStore from "../../stores/userStore";
+	import { userStore } from "../../stores/userStore";
 
-	export let apiUrl: string = "http://localhost:8000";
+	export let apiUrl: string = "http://0.0.0.0:8000";
 
 	let showModal: boolean = true;
 	let hasValidInput: boolean = true;
@@ -16,16 +16,6 @@
 
 	let error: boolean = false;
 	let errorMessage: string = "";
-
-	const profileFromUsername = async (username: string) => {
-		let res = await fetch(apiUrl + "/api/get/user/id/" + username);
-		let id = await res.json();
-
-		res = await fetch(apiUrl + "/api/get/profile/by-id/" + id);
-		let data: any = await res.json();
-
-		return data;
-	}
 
 	const logIn = async (username: string, password: string) => {
 		let endpoint: string = apiUrl + "/api/post/login";
@@ -43,14 +33,7 @@
 		.then(async response => {
 			if (response.ok) {
 				error = false;
-				$userStore.username = username;
-
-				let user = await profileFromUsername(username);
-				$userStore.id = user.user_id;
-				$userStore.displayName = user.display_name;
-				$userStore.description = user.description;
-
-				$userStore.loggedIn = true;
+				userStore.logInWithUsername(username);
 			}
 			else {
 				throw new Error("eror");
