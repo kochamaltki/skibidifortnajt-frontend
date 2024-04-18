@@ -19,7 +19,7 @@
 			<Button>Create</Button>
 		{:else}
 			<Button>Sign Up</Button>
-			<Button>Log In</Button>
+			<Button on:click={userStore.toggleLoginPrompt}>Log In</Button>
 		{/if}
 	</div>
 </div>

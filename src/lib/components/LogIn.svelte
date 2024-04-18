@@ -5,10 +5,9 @@
 	import { userStore } from "../../stores/userStore";
 
 	export let apiUrl: string = "http://0.0.0.0:8000";
+	export let showModal: boolean = true;
 
-	let showModal: boolean = true;
 	let hasValidInput: boolean = true;
-
 	$: hasValidInput = usernameInput != "" && passwordInput != "";
 
 	let usernameInput: string = ""
