@@ -1,10 +1,7 @@
 <script lang="ts">
     import Input from "$lib/shared/Input.svelte";
-    import Clickable from "$lib/shared/Clickable.svelte";
 	import Button from "$lib/shared/Button.svelte";
 	import { userStore } from "../../stores/userStore";
-
-	export let profilePictureUrl: string = "/images/profilepicture.jpg"
 </script>
 
 <div class="container">
@@ -17,11 +14,12 @@
 		</Input>
 	</div>
 	<div class="right">
-		{#if !$userStore.loggedIn}
+		{#if $userStore.loggedIn}
+			<!-- TODO: Add user profile picture from the store -->
+			<Button>Create</Button>
+		{:else}
 			<Button>Sign Up</Button>
 			<Button>Log In</Button>
-		{:else}
-			<Button>Create</Button>
 		{/if}
 	</div>
 </div>
