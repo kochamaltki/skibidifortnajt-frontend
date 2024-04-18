@@ -2,8 +2,12 @@ import { writable } from "svelte/store";
 import apiUrl from "./apiUrl";
 
 export function createUserStore(apiUrl: string) {
-	const store = writable({
+	const loginData = writable({
 		loggedIn:  false,
+		showLoginPrompt: false,
+	});
+
+	const userData = writable({
 		username: "username",
 		displayName: "displayName",
 		description: "description",
@@ -14,13 +18,17 @@ export function createUserStore(apiUrl: string) {
 		let res = await fetch(apiUrl + "/api/get/profile/by-id/" + id);
 		let data: any = await res.json();
 
-		store.set({
-			loggedIn: true,
+		userData.set({
 			username: data.user_name,
 			displayName: data.display_name,
 			description: data.description,
 			id: data.id
 		});
+
+		loginData.set({
+			loggedIn: true,
+			showLoginPrompt: false
+		})
 	}
 
 	async function logInWithUsername(username: string) {
@@ -30,10 +38,19 @@ export function createUserStore(apiUrl: string) {
 		return logInWithId(id);
 	}
 
+	function toggleLoginPrompt() {
+		loginData.update(data => {
+			console.log(data.showLoginPrompt)
+			return {...data, showLoginPrompt: !data.showLoginPrompt};
+		})
+	}
+
 	return {
-		...store,
+		...userData,
+		...loginData,
 		logInWithId,
-		logInWithUsername
+		logInWithUsername,
+		toggleLoginPrompt
 	};
 }
 
