@@ -36,7 +36,7 @@
 				userStore.logInWithUsername(username);
 			}
 			else {
-				throw new Error("eror");
+				throw new Error(String(response.body));
 			}
 		})
 		.catch(err => {
