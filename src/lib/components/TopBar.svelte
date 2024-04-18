@@ -1,133 +1,70 @@
 <script lang="ts">
-    export let profilePictureUrl: string = "/images/profilepicture.jpg"
-    import TextInput from "$components/TextInput.svelte";
+    import Input from "$lib/shared/Input.svelte";
     import Clickable from "$lib/shared/Clickable.svelte";
-    let flaga: boolean = true;
+	import Button from "$lib/shared/Button.svelte";
+	import { userStore } from "../../stores/userStore";
+
+	export let profilePictureUrl: string = "/images/profilepicture.jpg"
 </script>
-<header>
-<div class="bar">
-    <div class="logo">
-        <h1>Logo</h1>
-    </div>
-    <TextInput>
-    </TextInput>
-    {#if flaga == true}
-        <div class="right-logged">
-            <Clickable>
-                <div class="create">
-                    <h1>Create</h1>
-                </div>
-            </Clickable>
-            <Clickable>
-                <img src="{profilePictureUrl}" alt="profilowe" class="profilepicture">
-            </Clickable>
-        </div>
-    {:else}
-        <div class="right-signup">
-            <div class="signup">
-                <button>Sign up</button>
-            </div>
-            <div class="login">
-                <button>Log in</button>
-            </div>
-        </div>
-    {/if}
+
+<div class="container">
+	<div class="logo">
+		<h1>Logo</h1>
+	</div>
+	<div class="input">
+		<Input placeholder="Search...">
+			<svg slot="left" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="search"><path fill="#313646" d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"></path></svg>
+		</Input>
+	</div>
+	<div class="right">
+		{#if !$userStore.loggedIn}
+			<Button>Sign Up</Button>
+			<Button>Log In</Button>
+		{:else}
+			<Button>Create</Button>
+		{/if}
+	</div>
 </div>
-</header>
 
 <style lang="scss">
     $bg: #181B29;
-    $fg: #F0F0F0;
     $red: #FF4655;
     $maxWidth: 60px;
-    .bar{
-        right: 0;
-        left: 0;
-        top: 0;
+
+	.logo, .input, .right {
+		width: 30%;
+	}
+
+	.input {
+		width: 600px;
+		display: flex;
+	}
+
+	.right {
+		display: flex;
+		flex-direction: row-reverse;
+		gap: 40px;
+	}
+
+	.icon {
+		width: 24px;
+	}
+
+    .container{
+		padding: 0 40px;
         display: flex;
-        justify-content: space-between;
         align-items: center;
+		justify-content: space-between;
+
         background-color: $bg;
-        width: 100%;
-        margin: 0px;
+		height: 100px;
     }
     .logo{
         h1{
-            color: $fg;
+			padding: 0;
+			margin: 0;
             font-size: 48px;
-            padding-top: 20px;
-            padding-left: 40px;
-            padding-bottom: 20px;
-            margin: 0px;
+			color: #f0f0f0;
         }
     }
-    .right-logged{
-        display: flex;
-        align-items: center;
-        //padding-top: 20px;
-        //padding-right: 40px;
-        //padding-bottom: 20px;
-        column-gap: 40px;
-    }
-    .right-signup{
-        display: flex;
-        align-items: center;
-        padding-top: 20px;
-        padding-right: 40px;
-        padding-bottom: 20px;
-        column-gap: 40px;
-    }
-    .profilepicture{
-        max-width: $maxWidth;
-        border-radius: $maxWidth;
-        margin-top: 18px;
-        margin-right: 40px;
-        margin-bottom: 18px;
-    }
-    .create{
-        h1{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            background-color: $red;
-            color: $fg;
-            font-weight: bold;
-            font-size: 24px;
-            width: 150px;
-            height: 50px;
-            border-radius: 30px;
-            margin-top: 25px;
-            margin-bottom: 25px;
-            font-family: inherit;
-        }
-    }
-    .signup{
-        button{
-            border: none;
-            background-color: $red;
-            color: $fg;
-            font-weight: bold;
-            font-size: 24px;
-            width: 150px;
-            height: 50px;
-            border-radius: 30px;
-            font-family: inherit;
-        }
-    }
-    .login{
-        button{
-            border: none;
-            background-color: $red;
-            color: $fg;
-            font-weight: bold;
-            font-size: 24px;
-            width: 150px;
-            height: 50px;
-            border-radius: 30px;
-            font-family: inherit;
-        }
-    }
-
 </style>
-
