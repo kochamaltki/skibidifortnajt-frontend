@@ -2,10 +2,9 @@
 	import Modal from "$lib/shared/Modal.svelte";
 	import Button from "$lib/shared/Button.svelte";
 	import Input from "$lib/shared/Input.svelte";
-	import { userStore } from "../../stores/userStore";
 
-	export let apiUrl: string = "http://0.0.0.0:8000";
-	export let showModal: boolean = true;
+	import { userStore } from "../../stores/userStore";
+	import apiUrl from "../../stores/apiUrl";
 
 	let hasValidInput: boolean = true;
 	$: hasValidInput = usernameInput != "" && passwordInput != "";
@@ -35,7 +34,7 @@
 				userStore.logInWithUsername(username);
 			}
 			else {
-				throw new Error(String(response.body));
+				throw new Error(String(response.status + ": " + response.body));
 			}
 		})
 		.catch(err => {
@@ -46,7 +45,7 @@
 	}
 </script>
 
-<Modal bind:showModal={showModal}>
+<Modal bind:showModal={$userStore.showLoginPrompt}>
 	<form on:submit|preventDefault={() => logIn(usernameInput, passwordInput)}>
 		<div class="container">
 			<h1>Log In</h1>

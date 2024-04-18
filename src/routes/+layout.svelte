@@ -2,9 +2,6 @@
 	import '@fontsource-variable/outfit'
 	import LogIn from "$components/LogIn.svelte";
 	import TopBar from '$components/TopBar.svelte';
-
-	import apiUrl from "../stores/apiUrl";
-	import { userStore } from '../stores/userStore';
 </script>
 
 <div class="container">
@@ -12,7 +9,7 @@
 		<TopBar/>
 	</header>
 	<slot/>
-	<LogIn {apiUrl} bind:showModal={$userStore.showLoginPrompt}/>
+	<LogIn/>
 </div>
 
 <style lang="scss">
