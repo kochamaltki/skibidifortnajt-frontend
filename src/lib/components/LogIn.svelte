@@ -4,7 +4,7 @@
 	import Input from "$lib/shared/Input.svelte";
 	import { userStore } from "../../stores/userStore";
 
-	export let apiUrl: string = "http://0.0.0.0:8000";
+	export let apiUrl: string = "http://localhost:8000";
 	export let showModal: boolean = true;
 
 	let hasValidInput: boolean = true;
@@ -35,7 +35,7 @@
 				userStore.logInWithUsername(username);
 			}
 			else {
-				throw new Error(String(response.body));
+				throw new Error(String(await response.text()));
 			}
 		})
 		.catch(err => {
