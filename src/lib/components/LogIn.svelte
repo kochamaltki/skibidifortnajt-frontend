@@ -31,10 +31,10 @@
 		.then(async response => {
 			if (response.ok) {
 				error = false;
-				userStore.logInWithUsername(username);
+				await userStore.logInWithUsername(username);
 			}
 			else {
-				throw new Error(String(response.status + ": " + response.body));
+				throw new Error(response.status + ": " + response.body);
 			}
 		})
 		.catch(err => {
