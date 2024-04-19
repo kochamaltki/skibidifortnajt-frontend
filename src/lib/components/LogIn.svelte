@@ -3,8 +3,8 @@
 	import Button from "$lib/shared/Button.svelte";
 	import Input from "$lib/shared/Input.svelte";
 
-	import { userStore } from "../../stores/userStore";
-	import apiUrl from "../../stores/apiUrl";
+	import { userStore } from "$stores/userStore";
+	import apiUrl from "$stores/apiUrl";
 
 	let hasValidInput: boolean = true;
 	$: hasValidInput = usernameInput != "" && passwordInput != "";

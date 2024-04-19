@@ -1,7 +1,7 @@
 <script lang="ts">
     import Input from "$lib/shared/Input.svelte";
 	import Button from "$lib/shared/Button.svelte";
-	import { userStore } from "../../stores/userStore";
+	import { userStore } from "$stores/userStore";
 </script>
 
 <div class="container">
