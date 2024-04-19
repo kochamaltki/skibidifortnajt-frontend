@@ -34,7 +34,7 @@
 				await userStore.logInWithUsername(username);
 			}
 			else {
-				throw new Error(response.status + ": " + response.body);
+				throw new Error(String(await response.text()));
 			}
 		})
 		.catch(err => {
