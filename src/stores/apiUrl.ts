@@ -1,2 +1,2 @@
-let apiUrl: string = "http://192.168.23.70:8000";
+let apiUrl: string = "http://localhost:8000";
 export default apiUrl;
