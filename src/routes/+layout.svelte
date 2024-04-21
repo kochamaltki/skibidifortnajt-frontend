@@ -1,10 +1,9 @@
 <script lang="ts">
 	import '@fontsource-variable/outfit'
-	import LogIn from "$components/LogIn.svelte";
-	import TopBar from '$components/TopBar.svelte';
 
-	import apiUrl from "../stores/apiUrl";
-	import { userStore } from '../stores/userStore';
+	import LogIn from "$components/LogIn.svelte";
+	import SignUp from '$components/SignUp.svelte';
+	import TopBar from '$components/TopBar.svelte';
 </script>
 
 <div class="container">
@@ -12,7 +11,9 @@
 		<TopBar/>
 	</header>
 	<slot/>
-	<LogIn {apiUrl} bind:showModal={$userStore.showLoginPrompt}/>
+
+	<SignUp/>
+	<LogIn/>
 </div>
 
 <style lang="scss">

@@ -9,14 +9,23 @@
 	let hasValidInput: boolean = true;
 	$: hasValidInput = usernameInput != "" && passwordInput != "";
 
-	let usernameInput: string = ""
-	let passwordInput: string = ""
+	let usernameInput: string = "";
+	let passwordInput: string = "";
+	let secondPasswordInput: string = "";
 
 	let error: boolean = false;
 	let errorMessage: string = "";
 
-	const logIn = async (username: string, password: string) => {
-		let endpoint: string = apiUrl + "/api/post/login";
+	const signUp = async (username: string, password: string) => {
+		if (passwordInput !== secondPasswordInput) {
+			error = true;
+			errorMessage = "Passwords don't match!"
+			secondPasswordInput = "";
+
+			return;
+		}
+
+		let endpoint: string = apiUrl + "/api/post/signup";
 		await fetch(endpoint, {
 			credentials: "include",
 			method: "POST",
@@ -40,13 +49,13 @@
 		.catch(err => {
 			error = true;
 			errorMessage = err;
-			passwordInput = usernameInput = "";
+			passwordInput = usernameInput = secondPasswordInput = "";
 		});
 	}
 </script>
 
-<Modal bind:showModal={$userStore.showLogInPrompt}>
-	<form on:submit|preventDefault={() => logIn(usernameInput, passwordInput)}>
+<Modal bind:showModal={$userStore.showSignUpPrompt}>
+	<form on:submit|preventDefault={() => signUp(usernameInput, passwordInput)}>
 		<div class="container">
 			<h1>Log In</h1>
 			<div class="input width-style">
@@ -54,6 +63,9 @@
 					<svg slot="right" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="user"><path fill="#313646" d="M15.71,12.71a6,6,0,1,0-7.42,0,10,10,0,0,0-6.22,8.18,1,1,0,0,0,2,.22,8,8,0,0,1,15.9,0,1,1,0,0,0,1,.89h.11a1,1,0,0,0,.88-1.1A10,10,0,0,0,15.71,12.71ZM12,12a4,4,0,1,1,4-4A4,4,0,0,1,12,12Z"></path></svg>
 				</Input>
 				<Input placeholder="Password" required={true} bind:input={passwordInput} type="password">
+					<svg slot="right" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="lock"><path fill="#313646" d="M17,9V7A5,5,0,0,0,7,7V9a3,3,0,0,0-3,3v7a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V12A3,3,0,0,0,17,9ZM9,7a3,3,0,0,1,6,0V9H9Zm9,12a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V12a1,1,0,0,1,1-1H17a1,1,0,0,1,1,1Z"></path></svg>
+				</Input>
+				<Input placeholder="Repeat password" required={true} bind:input={secondPasswordInput} type="password">
 					<svg slot="right" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="lock"><path fill="#313646" d="M17,9V7A5,5,0,0,0,7,7V9a3,3,0,0,0-3,3v7a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V12A3,3,0,0,0,17,9ZM9,7a3,3,0,0,1,6,0V9H9Zm9,12a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V12a1,1,0,0,1,1-1H17a1,1,0,0,1,1,1Z"></path></svg>
 				</Input>
 			</div>
@@ -67,7 +79,7 @@
 					<h2> {errorMessage} </h2>
 				{/if}
 
-				<p>Don't have an account? <a href="/">Sign up</a></p>
+				<p>Already have an account? <a href="/">Log in</a></p>
 			</div>
 		</div>
 	</form>

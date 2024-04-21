@@ -1,7 +1,7 @@
 <script lang="ts">
     import Input from "$lib/shared/Input.svelte";
 	import Button from "$lib/shared/Button.svelte";
-	import { userStore } from "../../stores/userStore";
+	import { userStore } from "$stores/userStore";
 </script>
 
 <div class="container">
@@ -18,8 +18,8 @@
 			<!-- TODO: Add user profile picture from the store -->
 			<Button>Create</Button>
 		{:else}
-			<Button>Sign Up</Button>
-			<Button on:click={userStore.toggleLoginPrompt}>Log In</Button>
+			<Button on:click={userStore.toggleSignUpPrompt}>Sign Up</Button>
+			<Button on:click={userStore.toggleLogInPrompt}>Log In</Button>
 		{/if}
 	</div>
 </div>
