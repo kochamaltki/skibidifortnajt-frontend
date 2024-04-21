@@ -49,7 +49,7 @@
 		.catch(err => {
 			error = true;
 			errorMessage = err;
-			passwordInput = usernameInput = "";
+			passwordInput = usernameInput = secondPasswordInput = "";
 		});
 	}
 </script>
