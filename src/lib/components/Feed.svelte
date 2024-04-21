@@ -1,14 +1,26 @@
 <script lang="ts">
+	import { onMount } from "svelte";
     import Post from "./Post.svelte";
+	import apiUrl from "$stores/apiUrl";
 
-	let posts: any[] = [
-		{displayName: "Aleksander Klik", content: "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."},
-		{displayName: "Aleksander Klik", content: "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."},
-		{displayName: "Aleksander Klik", content: "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."},
-		{displayName: "Aleksander Klik", content: "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."},
-		{displayName: "Aleksander Klik", content: "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."},
-		{displayName: "Aleksander Klik", content: "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."}
-	];
+	let posts: any[] = [];
+
+	onMount(async () => {
+		const res = await fetch(apiUrl + "/api/get/posts/all");
+		let data = await res.json();
+
+		console.log(data);
+
+		posts = data.post_list.map((post: any) => {
+			return {
+				datePosted: post.date * 1000,
+				content: post.body,
+				likeCount: post.likes
+			}
+		});
+
+		console.log(posts);
+	});
 </script>
 
 <div class="container">
