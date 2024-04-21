@@ -15,7 +15,8 @@
 			return {
 				datePosted: post.date * 1000,
 				content: post.body,
-				likeCount: post.likes
+				likeCount: post.likes,
+				postId: post.post_id
 			}
 		});
 

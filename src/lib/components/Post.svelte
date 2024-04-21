@@ -6,6 +6,8 @@
 	import Card from '$lib/shared/Card.svelte';
 	import Clickable from '$lib/shared/Clickable.svelte';
 
+	import apiUrl from '$stores/apiUrl';
+
 	const getRandomProiflePicture = () => {
 		let index: number = Math.floor(Math.random() * 10);
 		return `/images/altki/altka${index}.png`;
@@ -26,7 +28,7 @@
 		return formatDistance(new Date(date), new Date(), { addSuffix: true });
 	}
 
-	const likePost = () => {
+	const likePost = async () => {
 		if(liked)
 		{
 			likeCount -= 1;
@@ -37,6 +39,17 @@
 			likeCount += 1;
 			liked = true;
 		}
+
+		await fetch(apiUrl+"/api/post/react", {
+			credentials: "include",
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				post_id: postId
+			})
+		})
 	}
 
 	const copyPostUrl = () => {
