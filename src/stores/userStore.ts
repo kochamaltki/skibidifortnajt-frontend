@@ -21,7 +21,7 @@ export function createUserStore(apiUrl: string) {
 			username: d.user_name,
 			displayName: d.display_name,
 			description: d.description,
-			id: d.id,
+			id: id,
 
 			loggedIn: true,
 			showLogInPrompt: false,
