@@ -2,35 +2,31 @@ import { writable } from "svelte/store";
 import apiUrl from "./apiUrl";
 
 export function createUserStore(apiUrl: string) {
-	const loginData = writable({
+	const data = writable({
+		username: "username",
+		displayName: "displayName",
+		description: "description",
+		id: -1,
+
 		loggedIn:  false,
 		showLogInPrompt: false,
 		showSignUpPrompt: false
 	});
 
-	const userData = writable({
-		username: "username",
-		displayName: "displayName",
-		description: "description",
-		id: -1,
-	});
-
 	async function logInWithId(id: number) {
 		let res = await fetch(apiUrl + "/api/get/profile/by-id/" + id);
-		let data: any = await res.json();
+		let d: any = await res.json();
 
-		userData.set({
-			username: data.user_name,
-			displayName: data.display_name,
-			description: data.description,
-			id: data.id
-		});
+		data.set({
+			username: d.user_name,
+			displayName: d.display_name,
+			description: d.description,
+			id: d.id,
 
-		loginData.set({
 			loggedIn: true,
 			showLogInPrompt: false,
 			showSignUpPrompt: false,
-		})
+		});
 	}
 
 	async function logInWithUsername(username: string) {
@@ -41,26 +37,25 @@ export function createUserStore(apiUrl: string) {
 	}
 
 	function toggleLogInPrompt() {
-		loginData.update(data => {
-			return {...data,
-				showLogInPrompt: !data.showLogInPrompt,
+		data.update(d => {
+			return {...d,
+				showLogInPrompt: !d.showLogInPrompt,
 				showSignUpPrompt: false
 			};
 		})
 	}
 
 	function toggleSignUpPrompt() {
-		loginData.update(data => {
-			return {...data,
-				showSignUpPrompt: !data.showSignUpPrompt,
+		data.update(d => {
+			return {...d,
+				showSignUpPrompt: !d.showSignUpPrompt,
 				showLogInPrompt: false
 			};
 		})
 	}
 
 	return {
-		...userData,
-		...loginData,
+		...data,
 		logInWithId,
 		logInWithUsername,
 		toggleLogInPrompt,
