@@ -4,12 +4,10 @@
 	import apiUrl from "$stores/apiUrl";
 
 	let posts: any[] = [];
-
-	onMount(async () => {
+	
+	const fetchPosts = async () => {
 		const res = await fetch(apiUrl + "/api/get/posts/all");
 		let data = await res.json();
-
-		console.log(data);
 
 		posts = data.post_list.map((post: any) => {
 			return {
@@ -19,9 +17,9 @@
 				postId: post.post_id
 			}
 		});
+	};
 
-		console.log(posts);
-	});
+	onMount(fetchPosts);
 </script>
 
 <div class="container">

@@ -16,7 +16,7 @@
 	<div class="right">
 		{#if $userStore.loggedIn}
 			<!-- TODO: Add user profile picture from the store -->
-			<Button>Create</Button>
+			<Button on:click={() => alert("post creation not implemented")}>Create</Button>
 		{:else}
 			<Button on:click={userStore.toggleSignUpPrompt}>Sign Up</Button>
 			<Button on:click={userStore.toggleLogInPrompt}>Log In</Button>
