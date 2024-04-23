@@ -70,7 +70,7 @@
 					<h2> {errorMessage} </h2>
 				{/if}
 				<div class="footer">
-					<p>Don't have an account? <a href="/">Sign up</a></p>
+					<p>Don't have an account? <a on:click={userStore.toggleSignUpPrompt} href="/">Sign up</a></p>
 					<Checkbox bind:checked={keepLoggedIn} text="Keep me logged in"/>
 				</div>
 			</div>
@@ -79,6 +79,12 @@
 </Modal>
 
 <style lang="scss">
+	.footer {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
 	a {
 		color: #ff4655;
 		text-decoration: none;

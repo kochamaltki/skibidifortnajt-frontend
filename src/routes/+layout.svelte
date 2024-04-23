@@ -11,6 +11,7 @@
 	<header>
 		<TopBar/>
 	</header>
+
 	<slot/>
 
 	<SignUp/>
