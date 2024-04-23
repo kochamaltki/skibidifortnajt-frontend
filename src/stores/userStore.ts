@@ -63,5 +63,4 @@ export function createUserStore(apiUrl: string) {
 	};
 }
 
-
 export const userStore = createUserStore(apiUrl)

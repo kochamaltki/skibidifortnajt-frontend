@@ -4,11 +4,7 @@
 	import LogIn from "$components/LogIn.svelte";
 	import SignUp from '$components/SignUp.svelte';
 	import TopBar from '$components/TopBar.svelte';
-    import { onMount } from 'svelte';
 
-	onMount(async () => {
-		// check logged in user;
-	});
 </script>
 
 <div class="container">
