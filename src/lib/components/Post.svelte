@@ -36,6 +36,7 @@
 	}
 
 	onMount(checkLiked);
+	$: $userStore.loggedIn, checkLiked();
 
 	const format = (date: number) => {
 		return formatDistance(new Date(date), new Date(), { addSuffix: true });
