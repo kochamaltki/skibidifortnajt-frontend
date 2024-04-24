@@ -2,24 +2,30 @@ import { writable } from "svelte/store";
 import apiUrl from "./apiUrl";
 
 export function createUserStore(apiUrl: string) {
-	const store = writable({
-		loggedIn:  false,
+	const data = writable({
 		username: "username",
 		displayName: "displayName",
 		description: "description",
 		id: -1,
+
+		loggedIn:  false,
+		showLogInPrompt: false,
+		showSignUpPrompt: false
 	});
 
 	async function logInWithId(id: number) {
 		let res = await fetch(apiUrl + "/api/get/profile/by-id/" + id);
-		let data: any = await res.json();
+		let d: any = await res.json();
 
-		store.set({
+		data.set({
+			username: d.user_name,
+			displayName: d.display_name,
+			description: d.description,
+			id: id,
+
 			loggedIn: true,
-			username: data.user_name,
-			displayName: data.display_name,
-			description: data.description,
-			id: data.id
+			showLogInPrompt: false,
+			showSignUpPrompt: false,
 		});
 	}
 
@@ -30,12 +36,31 @@ export function createUserStore(apiUrl: string) {
 		return logInWithId(id);
 	}
 
+	function toggleLogInPrompt() {
+		data.update(d => {
+			return {...d,
+				showLogInPrompt: !d.showLogInPrompt,
+				showSignUpPrompt: false
+			};
+		})
+	}
+
+	function toggleSignUpPrompt() {
+		data.update(d => {
+			return {...d,
+				showSignUpPrompt: !d.showSignUpPrompt,
+				showLogInPrompt: false
+			};
+		})
+	}
+
 	return {
-		...store,
+		...data,
 		logInWithId,
-		logInWithUsername
+		logInWithUsername,
+		toggleLogInPrompt,
+		toggleSignUpPrompt
 	};
 }
 
-
-export const userStore = createUserStore(apiUrl);
+export const userStore = createUserStore(apiUrl)

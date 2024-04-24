@@ -1,18 +1,13 @@
 <script lang="ts">
     import Post from "./Post.svelte";
+	import { postStore } from "$stores/postStore";
+	import { onMount } from "svelte";
 
-	let posts: any[] = [
-		{displayName: "Aleksander Klik", content: "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."},
-		{displayName: "Aleksander Klik", content: "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."},
-		{displayName: "Aleksander Klik", content: "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."},
-		{displayName: "Aleksander Klik", content: "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."},
-		{displayName: "Aleksander Klik", content: "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."},
-		{displayName: "Aleksander Klik", content: "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."}
-	];
+	onMount(postStore.fetchPosts);
 </script>
 
 <div class="container">
-	{#each posts as post}
+	{#each $postStore.posts as post}
 		<div class="post">
 			<Post {...post}/>
 		</div>

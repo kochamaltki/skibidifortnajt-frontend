@@ -1,17 +1,36 @@
 <script lang="ts">
 	import '@fontsource-variable/outfit'
-	import LogIn from "$components/LogIn.svelte";
-	import TopBar from '$components/TopBar.svelte';
 
-	import apiUrl from "../stores/apiUrl";
+	import LogIn from "$components/LogIn.svelte";
+	import SignUp from '$components/SignUp.svelte';
+	import TopBar from '$components/TopBar.svelte';
+	
+	import { userStore } from '$stores/userStore';
+	import apiUrl from '$stores/apiUrl';
+
+	import { onMount } from 'svelte';
+
+	onMount(async () => {
+		fetch(apiUrl + "/api/get/cookie", {
+			credentials: "include"
+		}).then(async res => {
+			if(res.ok) {
+				let id = await res.json();
+				userStore.logInWithId(id);
+			}
+		});
+	});
 </script>
 
 <div class="container">
 	<header>
 		<TopBar/>
 	</header>
+
 	<slot/>
-	<LogIn {apiUrl}/>
+
+	<SignUp/>
+	<LogIn/>
 </div>
 
 <style lang="scss">

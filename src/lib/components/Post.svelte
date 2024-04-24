@@ -2,9 +2,13 @@
 	import { formatDistance } from 'date-fns'
 	import { scale } from 'svelte/transition'
 	import { elasticOut } from 'svelte/easing'
+	import { onMount } from 'svelte';
 
 	import Card from '$lib/shared/Card.svelte';
 	import Clickable from '$lib/shared/Clickable.svelte';
+
+	import apiUrl from '$stores/apiUrl';
+	import { userStore } from '$stores/userStore';
 
 	const getRandomProiflePicture = () => {
 		let index: number = Math.floor(Math.random() * 10);
@@ -21,21 +25,52 @@
 	export let postId: number = -1;
 
 	export let liked: boolean = false;
+	let endpoint: string;
+
+	const checkLiked = async () => {
+		if($userStore.loggedIn) {
+			let res = await fetch(apiUrl+`/api/get/like/${postId}/${$userStore.id}`);
+			let data = await res.json();
+			liked = data;
+		}
+		else {
+			liked = false;
+		}
+	}
+
+	onMount(checkLiked);
+	$: $userStore.loggedIn, checkLiked();
 
 	const format = (date: number) => {
 		return formatDistance(new Date(date), new Date(), { addSuffix: true });
 	}
 
-	const likePost = () => {
-		if(liked)
-		{
-			likeCount -= 1;
-			liked = false;
-		}
-		else
-		{
-			likeCount += 1;
-			liked = true;
+	const likePost = async () => {
+		if($userStore.loggedIn) {
+			await checkLiked();
+			if(liked)
+			{
+				likeCount -= 1;
+				endpoint = "unreact";
+			}
+			else
+			{
+				likeCount += 1;
+				endpoint = "react";
+			}
+
+			await fetch(apiUrl+"/api/post/"+endpoint, {
+				credentials: "include",
+				method: "POST",
+				headers: { 
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					post_id: postId
+				})
+			});
+			
+			liked = !liked;
 		}
 	}
 
