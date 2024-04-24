@@ -33,6 +33,9 @@
 			let data = await res.json();
 			liked = data;
 		}
+		else {
+			liked = false;
+		}
 	}
 
 	onMount(checkLiked);
