@@ -4,6 +4,25 @@
 	import LogIn from "$components/LogIn.svelte";
 	import SignUp from '$components/SignUp.svelte';
 	import TopBar from '$components/TopBar.svelte';
+	
+	import { postStore } from '$stores/postStore';
+	import { userStore } from '$stores/userStore';
+	import apiUrl from '$stores/apiUrl';
+
+	import { onMount } from 'svelte';
+
+	onMount(async () => {
+		let res = await fetch(apiUrl + "/api/get/cookie", {
+			credentials: "include"
+		});
+
+		if(res.ok) {
+			let id = await res.json();
+			await userStore.logInWithId(id);
+		}
+
+		postStore.fetchPosts();
+	});
 
 </script>
 

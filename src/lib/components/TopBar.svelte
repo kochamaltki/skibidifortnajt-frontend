@@ -2,6 +2,7 @@
     import Input from "$lib/shared/Input.svelte";
 	import Button from "$lib/shared/Button.svelte";
 	import { userStore } from "$stores/userStore";
+    import { postStore } from "$stores/postStore";
 </script>
 
 <div class="container">
@@ -16,7 +17,7 @@
 	<div class="right">
 		{#if $userStore.loggedIn}
 			<!-- TODO: Add user profile picture from the store -->
-			<Button on:click={() => alert("post creation not implemented")}>Create</Button>
+			<Button on:click={() => postStore.addPost("test")}>Create</Button>
 		{:else}
 			<Button on:click={userStore.toggleSignUpPrompt}>Sign Up</Button>
 			<Button on:click={userStore.toggleLogInPrompt}>Log In</Button>

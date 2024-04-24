@@ -25,15 +25,13 @@
 	export let postId: number = -1;
 
 	export let liked: boolean = false;
+	let endpoint: string;
 
 	const checkLiked = async () => {
 		if($userStore.loggedIn) {
 			let res = await fetch(apiUrl+`/api/get/like/${postId}/${$userStore.id}`);
 			let data = await res.json();
 			liked = data;
-		}
-		else {
-			liked = false;
 		}
 	}
 
@@ -44,11 +42,20 @@
 	}
 
 	const likePost = async () => {
-		checkLiked();
-		if(liked)
-		{
-			likeCount -= 1;
-			await fetch(apiUrl+"/api/post/unreact", {
+		if($userStore.loggedIn) {
+			await checkLiked();
+			if(liked)
+			{
+				likeCount -= 1;
+				endpoint = "unreact";
+			}
+			else
+			{
+				likeCount += 1;
+				endpoint = "react";
+			}
+
+			await fetch(apiUrl+"/api/post/"+endpoint, {
 				credentials: "include",
 				method: "POST",
 				headers: { 
@@ -58,24 +65,8 @@
 					post_id: postId
 				})
 			});
-
-			liked = false;
-		}
-		else
-		{
-			likeCount += 1;
-			await fetch(apiUrl+"/api/post/react", {
-				credentials: "include",
-				method: "POST",
-				headers: { 
-					"Content-Type": "application/json"
-				},
-				body: JSON.stringify({
-					post_id: postId
-				})
-			});
-
-			liked = true;
+			
+			liked = !liked;
 		}
 	}
 
