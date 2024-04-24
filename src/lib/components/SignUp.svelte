@@ -2,6 +2,7 @@
 	import Modal from "$lib/shared/Modal.svelte";
 	import Button from "$lib/shared/Button.svelte";
 	import Input from "$lib/shared/Input.svelte";
+	import Checkbox from "$lib/shared/Checkbox.svelte";
 
 	import { userStore } from "$stores/userStore";
 	import apiUrl from "$stores/apiUrl";
@@ -12,6 +13,7 @@
 	let usernameInput: string = "";
 	let passwordInput: string = "";
 	let secondPasswordInput: string = "";
+	let keepLoggedIn: boolean = true;
 
 	let error: boolean = false;
 	let errorMessage: string = "";
@@ -34,7 +36,8 @@
 			},
 			body: JSON.stringify({
 				user_name: username,
-				passwd: password
+				passwd: password,
+				remember_password: keepLoggedIn
 			})
 		})
 		.then(async response => {
@@ -57,7 +60,7 @@
 <Modal bind:showModal={$userStore.showSignUpPrompt}>
 	<form on:submit|preventDefault={() => signUp(usernameInput, passwordInput)}>
 		<div class="container">
-			<h1>Log In</h1>
+			<h1>Sign up</h1>
 			<div class="input width-style">
 				<Input placeholder="Username" required={true} bind:input={usernameInput}>
 					<svg slot="right" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="user"><path fill="#313646" d="M15.71,12.71a6,6,0,1,0-7.42,0,10,10,0,0,0-6.22,8.18,1,1,0,0,0,2,.22,8,8,0,0,1,15.9,0,1,1,0,0,0,1,.89h.11a1,1,0,0,0,.88-1.1A10,10,0,0,0,15.71,12.71ZM12,12a4,4,0,1,1,4-4A4,4,0,0,1,12,12Z"></path></svg>
@@ -78,14 +81,23 @@
 				{#if {error}}
 					<h2> {errorMessage} </h2>
 				{/if}
-
-				<p>Already have an account? <a href="/">Log in</a></p>
+				
+				<div class="footer">
+					<p>Already have an account? <a on:click={userStore.toggleLogInPrompt} href="/">Log in</a></p>
+					<Checkbox bind:checked={keepLoggedIn} text="Keep me logged in"/>
+				</div>
 			</div>
 		</div>
 	</form>
 </Modal>
 
 <style lang="scss">
+	.footer {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
 	a {
 		color: #ff4655;
 		text-decoration: none;

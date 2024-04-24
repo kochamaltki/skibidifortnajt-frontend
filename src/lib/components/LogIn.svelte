@@ -2,6 +2,7 @@
 	import Modal from "$lib/shared/Modal.svelte";
 	import Button from "$lib/shared/Button.svelte";
 	import Input from "$lib/shared/Input.svelte";
+	import Checkbox from "$lib/shared/Checkbox.svelte";
 
 	import { userStore } from "$stores/userStore";
 	import apiUrl from "$stores/apiUrl";
@@ -9,6 +10,7 @@
 	let hasValidInput: boolean = true;
 	$: hasValidInput = usernameInput != "" && passwordInput != "";
 
+	let keepLoggedIn: boolean = true;
 	let usernameInput: string = ""
 	let passwordInput: string = ""
 
@@ -25,7 +27,8 @@
 			},
 			body: JSON.stringify({
 				user_name: username,
-				passwd: password
+				passwd: password,
+				remember_password: keepLoggedIn
 			})
 		})
 		.then(async response => {
@@ -66,14 +69,22 @@
 				{#if {error}}
 					<h2> {errorMessage} </h2>
 				{/if}
-
-				<p>Don't have an account? <a href="/">Sign up</a></p>
+				<div class="footer">
+					<p>Don't have an account? <a on:click={userStore.toggleSignUpPrompt} href="/">Sign up</a></p>
+					<Checkbox bind:checked={keepLoggedIn} text="Keep me logged in"/>
+				</div>
 			</div>
 		</div>
 	</form>
 </Modal>
 
 <style lang="scss">
+	.footer {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
 	a {
 		color: #ff4655;
 		text-decoration: none;

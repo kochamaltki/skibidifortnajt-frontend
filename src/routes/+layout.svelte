@@ -4,10 +4,21 @@
 	import LogIn from "$components/LogIn.svelte";
 	import SignUp from '$components/SignUp.svelte';
 	import TopBar from '$components/TopBar.svelte';
-    import { onMount } from 'svelte';
+	
+	import { userStore } from '$stores/userStore';
+	import apiUrl from '$stores/apiUrl';
+
+	import { onMount } from 'svelte';
 
 	onMount(async () => {
-		// check logged in user;
+		fetch(apiUrl + "/api/get/cookie", {
+			credentials: "include"
+		}).then(async res => {
+			if(res.ok) {
+				let id = await res.json();
+				userStore.logInWithId(id);
+			}
+		});
 	});
 </script>
 
@@ -15,6 +26,7 @@
 	<header>
 		<TopBar/>
 	</header>
+
 	<slot/>
 
 	<SignUp/>
