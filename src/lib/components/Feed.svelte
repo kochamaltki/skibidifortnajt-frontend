@@ -1,7 +1,9 @@
 <script lang="ts">
     import Post from "./Post.svelte";
 	import { postStore } from "$stores/postStore";
+	import { onMount } from "svelte";
 
+	onMount(postStore.fetchPosts);
 </script>
 
 <div class="container">
