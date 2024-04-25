@@ -4,6 +4,7 @@
 	import LogIn from "$components/LogIn.svelte";
 	import SignUp from '$components/SignUp.svelte';
 	import TopBar from '$components/TopBar.svelte';
+	import CreatePost from '$components/CreatePost.svelte';
 	
 	import { userStore } from '$stores/userStore';
 	import apiUrl from '$stores/apiUrl';
@@ -31,6 +32,7 @@
 
 	<SignUp/>
 	<LogIn/>
+	<CreatePost/>
 </div>
 
 <style lang="scss">
