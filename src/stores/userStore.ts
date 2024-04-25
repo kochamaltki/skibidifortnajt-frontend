@@ -36,6 +36,54 @@ export function createUserStore(apiUrl: string) {
 		return logInWithId(id);
 	}
 
+	async function logIn(username: string, password: string, keepLoggedIn: boolean) {
+		let endpoint: string = apiUrl + "/api/post/login";
+		await fetch(endpoint, {
+			credentials: "include",
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				user_name: username,
+				passwd: password,
+				remember_password: keepLoggedIn
+			})
+		})
+		.then(async response => {
+			if (response.ok) {
+				await userStore.logInWithUsername(username);
+			}
+			else {
+				throw new Error(String(await response.text()));
+			}
+		})
+	}
+
+	async function signUp(username: string, password: string, keepLoggedIn: boolean) {
+		let endpoint: string = apiUrl + "/api/post/signup";
+		await fetch(endpoint, {
+			credentials: "include",
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				user_name: username,
+				passwd: password,
+				remember_password: keepLoggedIn
+			})
+		})
+		.then(async response => {
+			if (response.ok) {
+				await userStore.logInWithUsername(username);
+			}
+			else {
+				throw new Error(String(await response.text()));
+			}
+		})
+	}
+
 	async function logOut() {
 		await fetch(apiUrl + "/api/post/logout", {
 			credentials: "include",
@@ -83,6 +131,8 @@ export function createUserStore(apiUrl: string) {
 		logInWithUsername,
 		toggleLogInPrompt,
 		toggleSignUpPrompt,
+		signUp,
+		logIn,
 		logOut
 	};
 }
