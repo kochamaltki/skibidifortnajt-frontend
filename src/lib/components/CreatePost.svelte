@@ -11,10 +11,14 @@
 	let error: boolean = false;
 	let errorMessage: string = "";
 
+	const handlePost = async () => {
+		await postStore.addPost(postBody);
+		postBody = "";
+	}
 </script>
 
 <Modal bind:showModal={$postStore.showCreatePostPrompt}>
-	<form on:submit|preventDefault={() => {postStore.addPost(postBody)}}>
+	<form on:submit|preventDefault={handlePost}>
 		<div class="container">
 			<h1>Create Post</h1>
 			<div class="input width-style">
