@@ -36,6 +36,27 @@ export function createUserStore(apiUrl: string) {
 		return logInWithId(id);
 	}
 
+	async function logOut() {
+		await fetch(apiUrl + "/api/post/logout", {
+			credentials: "include",
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+		})
+
+		data.set({
+			username: "username",
+			displayName: "displayName",
+			description: "description",
+			id: -1,
+
+			loggedIn:  false,
+			showLogInPrompt: false,
+			showSignUpPrompt: false
+		});
+	}
+
 	function toggleLogInPrompt() {
 		data.update(d => {
 			return {...d,
@@ -59,7 +80,8 @@ export function createUserStore(apiUrl: string) {
 		logInWithId,
 		logInWithUsername,
 		toggleLogInPrompt,
-		toggleSignUpPrompt
+		toggleSignUpPrompt,
+		logOut
 	};
 }
 
