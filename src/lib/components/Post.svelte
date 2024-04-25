@@ -25,6 +25,7 @@
 	export let likeCount: number = 0;
 	export let commentCount: number = 0;
 	export let postId: number = -1;
+	export let userId: number = -1;
 
 	export let liked: boolean = false;
 

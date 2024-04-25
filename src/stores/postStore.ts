@@ -16,7 +16,9 @@ export function createPostStore(apiUrl: string) {
 				datePosted: post.date * 1000,
 				content: post.body,
 				likeCount: post.likes,
-				postId: post.post_id
+				postId: post.post_id,
+				displayName: post.user_name,
+				userId: post.user_id
 			}
 		});
 
