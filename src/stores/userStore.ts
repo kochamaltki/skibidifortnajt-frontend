@@ -59,7 +59,8 @@ export function createUserStore(apiUrl: string) {
 
 	function toggleLogInPrompt() {
 		data.update(d => {
-			return {...d,
+			return {
+				...d,
 				showLogInPrompt: !d.showLogInPrompt,
 				showSignUpPrompt: false
 			};
@@ -68,7 +69,8 @@ export function createUserStore(apiUrl: string) {
 
 	function toggleSignUpPrompt() {
 		data.update(d => {
-			return {...d,
+			return {
+				...d,
 				showSignUpPrompt: !d.showSignUpPrompt,
 				showLogInPrompt: false
 			};

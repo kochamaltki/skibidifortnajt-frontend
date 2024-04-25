@@ -4,7 +4,8 @@ import { userStore } from "./userStore";
 
 export function createPostStore(apiUrl: string) {
 	const data = writable({
-		posts: []
+		posts: [],
+		showCreatePostPrompt: false
 	});
 
 	async function fetchPosts(endpoint: string = "all") {
@@ -22,8 +23,11 @@ export function createPostStore(apiUrl: string) {
 			}
 		});
 
-		data.set({
-			posts: post_arr
+		data.update(d => {
+			return {
+				...d,
+				posts: post_arr
+			}
 		});
 	};
 
@@ -40,12 +44,30 @@ export function createPostStore(apiUrl: string) {
 				tags: tags
 			})
 		})
+		data.update(d => {
+			return {
+				...d,
+				showCreatePostPrompt: false,
+			};
+		})
+
+		fetchPosts();
+	}
+
+	function toggleCreatePostPrompt() {
+		data.update(d => {
+			return {
+				...d,
+				showCreatePostPrompt: !d.showCreatePostPrompt,
+			};
+		})
 	}
 
 	return {
 		...data,
 		fetchPosts,
-		addPost
+		addPost,
+		toggleCreatePostPrompt
 	};
 }
 

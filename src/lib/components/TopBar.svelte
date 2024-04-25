@@ -18,7 +18,7 @@
 		{#if $userStore.loggedIn}
 			<!-- TODO: Add user profile picture from the store -->
 			<Button on:click={userStore.logOut}>Log Out</Button>
-			<Button on:click={() => postStore.addPost("test")}>Create</Button>
+			<Button on:click={postStore.toggleCreatePostPrompt}>Create</Button>
 		{:else}
 			<Button on:click={userStore.toggleSignUpPrompt}>Sign Up</Button>
 			<Button on:click={userStore.toggleLogInPrompt}>Log In</Button>
