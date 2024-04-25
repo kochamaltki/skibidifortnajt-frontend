@@ -12,20 +12,20 @@
 
 	const formatter = Intl.NumberFormat("en", { notation: "compact" })
 
-	const getRandomProiflePicture = () => {
-		let index: number = Math.floor(Math.random() * 10);
+	const getProfilePictureFromId = (id: number) => {
+		let index = id % 10;
 		return `/images/altki/altka${index}.png`;
 	}
 
+	export let userId: number = -1;
 	export let displayName: string = "Username";
 	export let content: string = "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident. Nostrud officia pariatur ut officia. Sit irure elit esse ea nulla sunt ex occaecat reprehenderit commodo officia dolor Lorem duis laboris cupidatat officia voluptate. Culpa proident adipisicing id nulla nisi laboris ex in Lorem sunt duis officia eiusmod. Aliqua reprehenderit commodo ex non excepteur duis sunt velit enim. Voluptate laboris sint cupidatat ullamco ut ea consectetur et est culpa et culpa duis.";
-	export let profilePictureUrl: string = getRandomProiflePicture();
+	export let profilePictureUrl: string = getProfilePictureFromId(userId);
 
 	export let datePosted: number = 0;
 	export let likeCount: number = 0;
 	export let commentCount: number = 0;
 	export let postId: number = -1;
-	export let userId: number = -1;
 
 	export let liked: boolean = false;
 
