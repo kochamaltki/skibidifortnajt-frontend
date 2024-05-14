@@ -5,7 +5,6 @@
 	import Checkbox from "$lib/shared/Checkbox.svelte";
 
 	import { userStore } from "$stores/userStore";
-	import apiUrl from "$stores/apiUrl";
 
 	let hasValidInput: boolean = true;
 	$: hasValidInput = usernameInput != "" && passwordInput != "";
@@ -18,31 +17,14 @@
 	let errorMessage: string = "";
 
 	const logIn = async (username: string, password: string) => {
-		let endpoint: string = apiUrl + "/api/post/login";
-		await fetch(endpoint, {
-			credentials: "include",
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({
-				user_name: username,
-				passwd: password,
-				remember_password: keepLoggedIn
-			})
-		})
-		.then(async response => {
-			if (response.ok) {
-				error = false;
-				await userStore.logInWithUsername(username);
-			}
-			else {
-				throw new Error(String(await response.text()));
-			}
+		await userStore.logIn(username, password, keepLoggedIn)
+		.then(() => {
+			error = false;
+			passwordInput = usernameInput = "";
 		})
 		.catch(err => {
 			error = true;
-			errorMessage = err;
+			errorMessage = err.message;
 			passwordInput = usernameInput = "";
 		});
 	}
@@ -66,7 +48,7 @@
 					Continue
 				</Button>
 
-				{#if {error}}
+				{#if error}
 					<h2> {errorMessage} </h2>
 				{/if}
 				<div class="footer">

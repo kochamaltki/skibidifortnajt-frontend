@@ -5,7 +5,6 @@
 	import Checkbox from "$lib/shared/Checkbox.svelte";
 
 	import { userStore } from "$stores/userStore";
-	import apiUrl from "$stores/apiUrl";
 
 	let hasValidInput: boolean = true;
 	$: hasValidInput = usernameInput != "" && passwordInput != "";
@@ -27,31 +26,14 @@
 			return;
 		}
 
-		let endpoint: string = apiUrl + "/api/post/signup";
-		await fetch(endpoint, {
-			credentials: "include",
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({
-				user_name: username,
-				passwd: password,
-				remember_password: keepLoggedIn
-			})
-		})
-		.then(async response => {
-			if (response.ok) {
-				error = false;
-				await userStore.logInWithUsername(username);
-			}
-			else {
-				throw new Error(String(await response.text()));
-			}
+		userStore.signUp(username, password, keepLoggedIn)
+		.then(() => {
+			error = false;
+			passwordInput = usernameInput = secondPasswordInput = "";
 		})
 		.catch(err => {
 			error = true;
-			errorMessage = err;
+			errorMessage = err.message;
 			passwordInput = usernameInput = secondPasswordInput = "";
 		});
 	}
