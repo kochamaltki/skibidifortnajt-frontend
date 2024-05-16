@@ -3,8 +3,25 @@
 	import { postStore } from "$stores/postStore";
 	import { onMount } from "svelte";
 
+	let fetching: boolean = false;
+
 	onMount(postStore.fetchPosts);
 </script>
+
+<svelte:window 
+	on:scroll={async () => {
+		if(fetching) return;
+
+		let scroll = window.innerHeight * 2 + window.scrollY;
+
+		if(scroll >= document.body.offsetHeight) {
+			fetching = true;
+			await postStore.fetchNewPosts();
+			fetching = false;
+		}
+
+	}}
+/>
 
 <div class="container">
 	{#each $postStore.posts as post}
