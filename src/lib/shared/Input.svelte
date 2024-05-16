@@ -1,7 +1,7 @@
 <script lang="ts">
 	export let input: string = "";
 	export let placeholder: string = "";
-	export let type: string = "text;"
+	export let type: string = "text";
 
 	export let required: boolean = false;
 
@@ -13,7 +13,7 @@
 <div class="container">
 	<div class="left">
 		<slot name="left"/>
-		<input value={input} {type} {placeholder} {required} on:input={handleInput} on:submit>
+		<input value={input} {type} {placeholder} {required} on:input={handleInput} on:submit autocomplete="on">
 	</div>
 	<slot name="right"/>
 </div>
