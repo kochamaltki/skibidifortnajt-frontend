@@ -11,7 +11,6 @@ export function createPostStore(apiUrl: string) {
 
 	async function getPosts(endpoint: string) {
 		const value = get(data);
-		console.log(value.currentOffset)
 		const res = await fetch(apiUrl + "/api/get/posts/" + endpoint + "/" + value.currentLimit + "/" + value.currentOffset);
 		let d = await res.json();
 

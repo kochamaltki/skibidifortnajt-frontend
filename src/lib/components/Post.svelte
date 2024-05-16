@@ -53,7 +53,6 @@
 				}
 		});
 
-		console.log(out);
 		return out;
 	};
 
