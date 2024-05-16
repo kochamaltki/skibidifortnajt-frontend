@@ -150,6 +150,7 @@
 	}
 
 	h2 {
+		white-space: pre-wrap;
 		color: $white;
 		font-weight: normal;
 		font-size: 24px;
