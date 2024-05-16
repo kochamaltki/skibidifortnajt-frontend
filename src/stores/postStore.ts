@@ -38,6 +38,8 @@ export function createPostStore(apiUrl: string) {
 
 	async function fetchNewPosts(endpoint: string = "all") {
 		let post_arr = await getPosts(endpoint);
+		if(post_arr.length == 0) return;
+
 		const value = get(data);
 		post_arr = [...value.posts, ...post_arr];
 

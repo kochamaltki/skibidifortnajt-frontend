@@ -26,7 +26,7 @@
 <div class="container">
 	{#each $postStore.posts as post}
 		<div class="post">
-			<Post {...post}/>
+			<Post {...post} bind:likeCount={post.likes}/>
 		</div>
 	{/each}
 </div>
