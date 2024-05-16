@@ -34,6 +34,29 @@
 
 	$: likes = formatter.format(likeCount);
 
+	const formatHashtags = (content: string) => {
+		const regex = /(#\w+)/gi;
+
+		let out = content
+			.split(regex)
+			.map(chunk => {
+				if(chunk[0] == "#") {
+					return {
+						value: chunk,
+						hashtag: true
+					}
+				}
+
+				return {
+					value: chunk.replace(/^ /, ""),
+					hashtag: false
+				}
+		});
+
+		console.log(out);
+		return out;
+	};
+
 	const checkLiked = async () => {
 		if($userStore.loggedIn) {
 			let res = await fetch(apiUrl+`/api/get/like/${postId}/${$userStore.id}`);
@@ -47,6 +70,7 @@
 
 	onMount(checkLiked);
 	$: $userStore.loggedIn, checkLiked();
+	$: chunks = formatHashtags(content);
 
 	const format = (date: number) => {
 		return formatDistance(new Date(date), new Date(), { addSuffix: true });
@@ -107,7 +131,15 @@
 		</div>
 
 		<h2>
-			{content}
+			{#each chunks as chunk}
+				{#if chunk.hashtag}
+					<!-- <Clickable> -->
+						<span class="hashtag">{chunk.value}</span>
+					<!-- </Clickable> -->
+				{:else}
+					{chunk.value}
+				{/if}
+			{/each}
 		</h2>
 
 		<div class="bottom">
@@ -140,6 +172,10 @@
 	$white: #f0f0f0;
 	$gray: #474c63;
 	$accent: #ff4655;
+
+	.hashtag {
+		color: $accent;
+	}
 
 	h1 {
 		color: $white;
