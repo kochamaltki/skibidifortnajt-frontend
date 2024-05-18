@@ -1,15 +1,17 @@
-import { writable } from "svelte/store";
+import { writable, get } from "svelte/store";
 import apiUrl from "./apiUrl";
-import { userStore } from "./userStore";
 
 export function createPostStore(apiUrl: string) {
 	const data = writable({
 		posts: [],
-		showCreatePostPrompt: false
+		showCreatePostPrompt: false,
+		currentOffset: 0,
+		currentLimit: 5
 	});
 
-	async function fetchPosts(endpoint: string = "all") {
-		const res = await fetch(apiUrl + "/api/get/posts/" + endpoint);
+	async function getPosts(endpoint: string) {
+		const value = get(data);
+		const res = await fetch(apiUrl + "/api/get/posts/" + endpoint + "/" + value.currentLimit + "/" + value.currentOffset);
 		let d = await res.json();
 
 		let post_arr = d.post_list.map((post: any) => {
@@ -23,6 +25,33 @@ export function createPostStore(apiUrl: string) {
 			}
 		});
 
+		data.update(d => {
+			return {
+				...d,
+				currentOffset: value.currentOffset + post_arr.length
+			}
+		});
+
+		return post_arr;
+	}
+
+	async function fetchNewPosts(endpoint: string = "all") {
+		let post_arr = await getPosts(endpoint);
+		if(post_arr.length == 0) return;
+
+		const value = get(data);
+		post_arr = [...value.posts, ...post_arr];
+
+		data.update(d => {
+			return {
+				...d,
+				posts: post_arr
+			}
+		});
+	}
+
+	async function fetchPosts(endpoint: string = "all") {
+		let post_arr = await getPosts(endpoint);
 		data.update(d => {
 			return {
 				...d,
@@ -44,14 +73,15 @@ export function createPostStore(apiUrl: string) {
 				tags: tags
 			})
 		})
+
+		
+
 		data.update(d => {
 			return {
 				...d,
 				showCreatePostPrompt: false,
 			};
 		})
-
-		fetchPosts();
 	}
 
 	function toggleCreatePostPrompt() {
@@ -66,6 +96,7 @@ export function createPostStore(apiUrl: string) {
 	return {
 		...data,
 		fetchPosts,
+		fetchNewPosts,
 		addPost,
 		toggleCreatePostPrompt
 	};
