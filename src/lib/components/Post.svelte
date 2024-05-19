@@ -2,13 +2,13 @@
 	import { formatDistance } from 'date-fns'
 	import { scale } from 'svelte/transition'
 	import { elasticOut } from 'svelte/easing'
-	import { onMount } from 'svelte';
 
 	import Card from '$lib/shared/Card.svelte';
 	import Clickable from '$lib/shared/Clickable.svelte';
 
 	import apiUrl from '$stores/apiUrl';
 	import { userStore } from '$stores/userStore';
+    import ImageContainer from '$lib/shared/ImageContainer.svelte';
 
 	const formatter = Intl.NumberFormat("en", { notation: "compact" })
 
@@ -26,6 +26,7 @@
 	export let likeCount: number = 0;
 	export let commentCount: number = 0;
 	export let postId: number = -1;
+	export let images: any[] = [];
 
 	export let liked: boolean = false;
 
@@ -67,7 +68,7 @@
 		}
 	}
 
-	onMount(checkLiked);
+	checkLiked();
 	$: $userStore.loggedIn, checkLiked();
 	$: chunks = formatHashtags(content);
 
@@ -141,6 +142,12 @@
 			{/each}
 		</h2>
 
+		{#if images.length}
+			<div class="images">
+				<ImageContainer {images}/>
+			</div>
+		{/if}
+
 		<div class="bottom">
 			<div class="left">
 				<Clickable on:click={likePost}>
@@ -171,6 +178,10 @@
 	$white: #f0f0f0;
 	$gray: #474c63;
 	$accent: #ff4655;
+
+	.images {
+		border-radius: 20px;
+	}
 
 	.hashtag {
 		color: $accent;

@@ -38,6 +38,7 @@
 <style lang="scss">
 	header {
 		position: sticky;
+		z-index: 8;
 		top: 0;
 		width: 100%;
 	}
