@@ -4,18 +4,30 @@
 	import { onMount } from "svelte";
 
 	let fetching: boolean = false;
+	let cooldown: boolean = false;
+
+	const startCooldown = async () => {
+		if(cooldown) {
+			return;
+		}
+
+		cooldown = true;
+		await new Promise(r => setTimeout(r, 500));
+		cooldown = false;
+	};
 
 	onMount(postStore.fetchPosts);
 </script>
 
 <svelte:window 
 	on:scroll={async () => {
-		if(fetching) return;
+		if(fetching || cooldown) return;
 
 		let scroll = window.innerHeight * 2 + window.scrollY;
 
 		if(scroll >= document.body.offsetHeight) {
 			fetching = true;
+			startCooldown();
 			await postStore.fetchNewPosts();
 			fetching = false;
 		}
