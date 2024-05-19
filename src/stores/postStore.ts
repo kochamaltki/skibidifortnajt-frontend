@@ -14,16 +14,23 @@ export function createPostStore(apiUrl: string) {
 		const res = await fetch(apiUrl + "/api/get/posts/" + endpoint + "/" + value.currentLimit + "/" + value.currentOffset);
 		let d = await res.json();
 
-		let post_arr = d.post_list.map((post: any) => {
+
+		let post_arr = await Promise.all(d.post_list.map(async (post: any) => {
+			let response = await fetch(apiUrl + "/api/get/images/from-post/" + post.post_id);
+			let images = (await response.json()).image_list.map((image: string) => {
+				return apiUrl + "/api/get/image/" + image;
+			});
+
 			return {
 				datePosted: post.date * 1000,
 				content: post.body,
 				likeCount: post.likes,
 				postId: post.post_id,
 				displayName: post.user_name,
-				userId: post.user_id
+				userId: post.user_id,
+				images: images
 			}
-		});
+		}));
 
 		data.update(d => {
 			return {
@@ -42,7 +49,7 @@ export function createPostStore(apiUrl: string) {
 		const value = get(data);
 		post_arr = [...value.posts, ...post_arr];
 
-		data.update(d => {
+		data.update((d: any) => {
 			return {
 				...d,
 				posts: post_arr
@@ -52,7 +59,7 @@ export function createPostStore(apiUrl: string) {
 
 	async function fetchPosts(endpoint: string = "all") {
 		let post_arr = await getPosts(endpoint);
-		data.update(d => {
+		data.update((d: any) => {
 			return {
 				...d,
 				posts: post_arr

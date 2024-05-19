@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Clickable from "./Clickable.svelte";
-	import { onMount } from "svelte";
 
 	export let images: Array<string> = [];
 	let currentIndex: number = 0;
@@ -9,12 +8,6 @@
 	$: arrLength = images.length;
 	$: showRight = (currentIndex < (arrLength - 1));
 	$: showLeft = (currentIndex > 0);
-
-	onMount(() => {
-		for(let i = 0; i < 17; i+=1) {
-			images = [...images, `/images/altki/altka${i}.png`]
-		}
-	})
 </script>
 	
 {#if arrLength}
