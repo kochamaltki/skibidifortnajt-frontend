@@ -11,7 +11,7 @@
 	$: showLeft = (currentIndex > 0);
 
 	onMount(() => {
-		for(let i = 0; i < 10; i+=1) {
+		for(let i = 0; i < 17; i+=1) {
 			images = [...images, `/images/altki/altka${i}.png`]
 		}
 	})
@@ -41,12 +41,26 @@
 				</Clickable>
 			{/if}
 		</div>
+		<div class="bg" style="background-image: url({images[currentIndex]});"></div>
 		<img src="{images[currentIndex]}" alt="post content"/>
 	</div>
 {/if}
 
 <style lang="scss">
 	$button-size: 40px;
+
+	.bg {
+		position: absolute;
+		z-index: 0;
+		top: -25%;
+		left: -25%;
+
+		filter: blur(100px) brightness(50%);
+		background-position: center;
+		background-size: cover;
+		height: 150%;
+		width: 150%;
+	}
 
 	.changeButton {
 		margin: 0 20px;
@@ -55,7 +69,7 @@
 		border-radius: 100%;
 		width: $button-size;
 		height: $button-size;
-		z-index: 2;
+		z-index: 3;
 
 		display: flex;
 		align-items: center;
@@ -79,10 +93,14 @@
 	}
 
 	img {
-		width: 100%;
 		height: 100%;
-		object-fit: cover;
-		object-position: center;
+		width: 100%;
+		max-height: inherit;
+
+		object-fit: contain;
+
+		position: inherit;
+		z-index: inherit;
 	}
 
 	.buttons {
@@ -90,7 +108,14 @@
 	}
 
 	.container {
+		display: flex;
+		justify-content: center;
+		border-radius: inherit;
 		position: relative;
+		z-index: 2;
+		overflow: hidden;
+
+		max-height: 740px;
 
 		&:hover > div {
 			display: flex;
