@@ -45,8 +45,6 @@
 	.bg {
 		position: absolute;
 		z-index: 0;
-		top: -25%;
-		left: -25%;
 
 		filter: blur(100px) brightness(50%);
 		background-position: center;

@@ -10,14 +10,37 @@
 
 	let error: boolean = false;
 	let errorMessage: string = "";
+	let files: any;
+
+	let imageIds: number[] = [];
+	let imageUrls: string[] = [];
 
 	const handlePost = async () => {
-		await postStore.addPost(postBody);
+		let id = await postStore.addPost(postBody);
 		postBody = "";
+
+		for(const imageId of imageIds) {
+			await postStore.addImageToPost(imageId, id);
+		}
+
+		imageIds = [];
+		imageUrls = [];
+		files = [];
+	}
+
+	const handleUpload = async () => {
+		let fileId = await postStore.uploadFile(files[0]);
+		imageIds = [...imageIds, fileId];
+		imageUrls = [...imageUrls, URL.createObjectURL(files[0])]
+	}
+
+	$: if (files) {
+		handleUpload();
 	}
 </script>
 
 <Modal bind:showModal={$postStore.showCreatePostPrompt}>
+	<input bind:files={files} id="file-input" type="file" accept="image/png">
 	<form on:submit|preventDefault={handlePost}>
 		<div class="container">
 			<h1>Create Post</h1>

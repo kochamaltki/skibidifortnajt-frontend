@@ -67,9 +67,9 @@ export function createPostStore(apiUrl: string) {
 		});
 	};
 
-	async function addPost(body: string, tags: Array<string> = []) {
+	async function addPost(body: string, tags: Array<string> = []): Promise<number> {
 		let endpoint: string = apiUrl + "/api/post/add-post";
-		await fetch(endpoint, {
+		let res = await fetch(endpoint, {
 			credentials: "include",
 			method: "POST",
 			headers: {
@@ -79,17 +79,51 @@ export function createPostStore(apiUrl: string) {
 				body: body,
 				tags: tags
 			})
-		})
+		});
 
-		
+		let post_id = await res.json();
 
 		data.update(d => {
 			return {
 				...d,
 				showCreatePostPrompt: false,
 			};
-		})
-	}
+		});
+
+		return post_id;
+	};
+
+	async function uploadFile(file: any): Promise<number> {
+		let endpoint: string = apiUrl + "/api/post/upload/image";
+
+		let formData = new FormData();
+		formData.append('file', file);
+
+		let res = await fetch(endpoint, {
+			credentials: "include",
+			method: "POST",
+			body: formData
+		});
+
+		let fileId = await res.json();
+		return fileId;
+	};
+
+	async function addImageToPost(imageId: number, postId: number) {
+		let endpoint: string = apiUrl + "/api/post/add-image-to-post";
+
+		await fetch(endpoint, {
+			credentials: "include",
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				image_id: imageId,
+				post_id: postId
+			})
+		});
+	};
 
 	function toggleCreatePostPrompt() {
 		data.update(d => {
@@ -97,15 +131,17 @@ export function createPostStore(apiUrl: string) {
 				...d,
 				showCreatePostPrompt: !d.showCreatePostPrompt,
 			};
-		})
-	}
+		});
+	};
 
 	return {
 		...data,
 		fetchPosts,
 		fetchNewPosts,
 		addPost,
-		toggleCreatePostPrompt
+		toggleCreatePostPrompt,
+		uploadFile,
+		addImageToPost
 	};
 }
 
