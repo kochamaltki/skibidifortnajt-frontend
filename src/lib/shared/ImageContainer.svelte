@@ -77,11 +77,15 @@
 		object-position: center;
 	}
 
-	.container {
-		display: flex;
-		justify-content: center;
-		align-items: center;
+	.buttons {
+		display: none;
+	}
 
+	.container {
 		position: relative;
+
+		&:hover > div {
+			display: flex;
+		}
 	}
 </style>
