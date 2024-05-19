@@ -4,10 +4,11 @@
 
 	export let images: Array<string> = [];
 	let currentIndex: number = 0;
+	let isHovered: boolean = false;
 
 	$: arrLength = images.length;
-	$: showRight = currentIndex < (arrLength - 1);
-	$: showLeft = currentIndex > 0;
+	$: showRight = (currentIndex < (arrLength - 1));
+	$: showLeft = (currentIndex > 0);
 
 	onMount(() => {
 		for(let i = 0; i < 10; i+=1) {
@@ -17,7 +18,9 @@
 </script>
 	
 {#if arrLength}
-	<div class="container">
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<!-- svelte-ignore a11y-mouse-events-have-key-events -->
+	<div class="container" on:mouseover={() => isHovered = true} on:mouseout={() => isHovered = false}>
 		<div class="buttons">
 			{#if showLeft}
 				<Clickable on:click={() => {
@@ -60,6 +63,11 @@
 
 		position: absolute;
 		top: calc(50% - calc(0.5 * $button-size));
+
+		transition: .3s;
+		&:hover {
+			filter: brightness(70%);
+		}
 	}
 
 	.left {
