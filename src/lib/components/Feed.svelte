@@ -6,13 +6,17 @@
 	let fetching: boolean = false;
 	let cooldown: boolean = false;
 
+	const sleep = (duration: number) => {
+		return new Promise((r) => setTimeout(r, duration))
+	};
+
 	const startCooldown = async () => {
 		if(cooldown) {
 			return;
 		}
 
 		cooldown = true;
-		await new Promise(r => setTimeout(r, 500));
+		await sleep(500);
 		cooldown = false;
 	};
 
