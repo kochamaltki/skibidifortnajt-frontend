@@ -2,13 +2,13 @@ import { writable, get } from "svelte/store";
 import apiUrl from "./apiUrl";
 
 interface Post {
-	datePosted: number,
-	content: string,
-	likeCount: number,
-	postId: number,
-	displayName: string,
-	userId: number,
-	images: Array<string>
+	datePosted: number;
+	content: string;
+	likeCount: number;
+	postId: number;
+	displayName: string;
+	userId: number;
+	images: Array<string>;
 }
 
 class PostContainer<Type> {
