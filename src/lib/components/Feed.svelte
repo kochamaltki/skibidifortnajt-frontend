@@ -42,7 +42,7 @@
 <div class="container">
 	{#each $postStore.posts.getItems() as post}
 		<div class="post">
-			<Post {...post} bind:likeCount={post.likes}/>
+			<Post {...post} bind:likeCount={post.likeCount}/>
 		</div>
 	{/each}
 </div>

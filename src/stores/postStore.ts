@@ -1,6 +1,16 @@
 import { writable, get } from "svelte/store";
 import apiUrl from "./apiUrl";
 
+interface Post {
+	datePosted: number,
+	content: string,
+	likeCount: number,
+	postId: number,
+	displayName: string,
+	userId: number,
+	images: Array<string>
+}
+
 class PostContainer<Type> {
 	private items: Type[];
 	private ids: Set<number>;
@@ -24,7 +34,7 @@ class PostContainer<Type> {
 
 export function createPostStore(apiUrl: string) {
 	const data = writable({
-		posts: new PostContainer(),
+		posts: new PostContainer<Post>(),
 		showCreatePostPrompt: false,
 		currentOffset: 0,
 		currentLimit: 5
