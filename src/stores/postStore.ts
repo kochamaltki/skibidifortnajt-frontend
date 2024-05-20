@@ -1,9 +1,30 @@
 import { writable, get } from "svelte/store";
 import apiUrl from "./apiUrl";
 
+class PostContainer<Type> {
+	private items: Type[];
+	private ids: Set<number>;
+
+	constructor() {
+		this.items = [];
+		this.ids = new Set<number>();
+	}
+
+	public getItems(): Type[] {
+		return this.items;
+	}
+
+	public addItem(item: Type, id: number) {
+		if(this.ids.has(id)) return;
+
+		this.items.push(item);
+		this.ids.add(id);
+	}
+}
+
 export function createPostStore(apiUrl: string) {
 	const data = writable({
-		posts: [],
+		posts: new PostContainer(),
 		showCreatePostPrompt: false,
 		currentOffset: 0,
 		currentLimit: 5
@@ -35,7 +56,7 @@ export function createPostStore(apiUrl: string) {
 		data.update(d => {
 			return {
 				...d,
-				currentOffset: value.currentOffset + post_arr.length
+				currentOffset: value.currentOffset
 			}
 		});
 
@@ -47,22 +68,30 @@ export function createPostStore(apiUrl: string) {
 		if(post_arr.length == 0) return;
 
 		const value = get(data);
-		post_arr = [...value.posts, ...post_arr];
+		for(let post of post_arr) {
+			value.posts.addItem(post, post.postId);
+		}
 
 		data.update((d: any) => {
 			return {
 				...d,
-				posts: post_arr
+				posts: value.posts
 			}
 		});
 	}
 
 	async function fetchPosts(endpoint: string = "all") {
 		let post_arr = await getPosts(endpoint);
+
+		const value = get(data);
+		for(let post of post_arr) {
+			value.posts.addItem(post, post.postId);
+		}
+
 		data.update((d: any) => {
 			return {
 				...d,
-				posts: post_arr
+				posts: value.posts
 			}
 		});
 	};
