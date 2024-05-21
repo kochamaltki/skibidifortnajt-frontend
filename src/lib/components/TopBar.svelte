@@ -1,10 +1,11 @@
 <script lang="ts">
     import Input from "$lib/shared/Input.svelte";
 	import Button from "$lib/shared/Button.svelte";
+	import Clickable from "$lib/shared/Clickable.svelte";
+
 	import { userStore } from "$stores/userStore";
     import { postStore } from "$stores/postStore";
     import { goto } from "$app/navigation";
-    import Clickable from "$lib/shared/Clickable.svelte";
 
 	let input: string = "";
 	const searchPosts = (query: string) => {

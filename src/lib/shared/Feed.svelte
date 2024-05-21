@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Post from "./Post.svelte";
+    import Post from "$components/Post.svelte";
 	import { postStore } from "$stores/postStore";
 	import { onMount } from "svelte";
 
