@@ -6,37 +6,47 @@
 	export let feedType = "new";
 	let fetching: boolean = false;
 	let cooldown: boolean = false;
+	let waiting: boolean = false;
 
 	const sleep = (duration: number) => {
 		return new Promise((r) => setTimeout(r, duration))
 	};
 
-	const startCooldown = async () => {
-		if(cooldown) {
-			return;
-		}
+	const fetchPosts = async () => {
+		fetching = true;
+		startCooldown();
+		await postStore.addNewPosts(feedType);
+		fetching = false;
+	}
 
+	const startCooldown = async () => {
 		cooldown = true;
 		await sleep(500);
 		cooldown = false;
+
+		if(waiting) {
+			fetchPosts();
+			waiting = false;
+		}
 	};
 
 	onMount(() => {
-			postStore.fetchPosts(feedType);
+			postStore.addNewPosts(feedType);
 	});
 </script>
 
 <svelte:window 
 	on:scroll={async () => {
-		if(fetching || cooldown) return;
+		if(fetching) return;
 
 		let scroll = window.innerHeight * 2 + window.scrollY;
 
 		if(scroll >= document.body.offsetHeight) {
-			fetching = true;
-			startCooldown();
-			await postStore.fetchNewPosts(feedType);
-			fetching = false;
+			if(cooldown) {
+				waiting = true;
+				return;
+			}
+			fetchPosts();
 		}
 
 	}}

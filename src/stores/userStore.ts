@@ -13,6 +13,18 @@ export function createUserStore(apiUrl: string) {
 		showSignUpPrompt: false
 	});
 
+	async function getUserData(id: number) {
+		let res = await fetch(apiUrl + "/api/get/profile/by-id/" + id);
+		let d: any = await res.json();
+
+		return {
+			username: d.user_name,
+			displayName: d.display_name,
+			description: d.description,
+			id: id,
+		};
+	}
+
 	async function logInWithId(id: number) {
 		let res = await fetch(apiUrl + "/api/get/profile/by-id/" + id);
 		let d: any = await res.json();
@@ -127,6 +139,7 @@ export function createUserStore(apiUrl: string) {
 
 	return {
 		...data,
+		getUserData,
 		logInWithId,
 		logInWithUsername,
 		toggleLogInPrompt,

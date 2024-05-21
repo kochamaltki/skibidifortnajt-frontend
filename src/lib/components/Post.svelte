@@ -2,13 +2,14 @@
 	import { formatDistance } from 'date-fns'
 	import { scale } from 'svelte/transition'
 	import { elasticOut } from 'svelte/easing'
+	import { userStore } from '$stores/userStore';
+	import { goto } from '$app/navigation';
 
 	import Card from '$lib/shared/Card.svelte';
 	import Clickable from '$lib/shared/Clickable.svelte';
+	import ImageContainer from '$lib/shared/ImageContainer.svelte';
 
 	import apiUrl from '$stores/apiUrl';
-	import { userStore } from '$stores/userStore';
-    import ImageContainer from '$lib/shared/ImageContainer.svelte';
 
 	const formatter = Intl.NumberFormat("en", { notation: "compact" })
 
@@ -114,7 +115,9 @@
 <Card>
 	<div class="container">
 		<div class="top">
-			<Clickable>
+			<Clickable on:click={async () => {
+				goto(`/user/${(await userStore.getUserData(userId)).username}`)
+			}}>
 				<div class="profile">
 					<img src="{profilePictureUrl}" alt="profile-pic" class="profile-pic">
 					<div class="username">
@@ -160,7 +163,9 @@
 						{likes}
 					</div>
 				</Clickable>
-				<Clickable>
+				<Clickable on:click={() => {
+					goto(`/post/${postId}`)
+				}}>
 					<div class="stat">
 						<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="comment"><path fill="#f0f0f0" d="M12,2A10,10,0,0,0,2,12a9.89,9.89,0,0,0,2.26,6.33l-2,2a1,1,0,0,0-.21,1.09A1,1,0,0,0,3,22h9A10,10,0,0,0,12,2Zm0,18H5.41l.93-.93a1,1,0,0,0,0-1.41A8,8,0,1,1,12,20Z"></path></svg>
 						{commentCount}
@@ -181,6 +186,7 @@
 
 	.images {
 		border-radius: 20px;
+		cursor: auto;
 	}
 
 	.hashtag {
@@ -200,6 +206,8 @@
 		color: $white;
 		font-weight: normal;
 		font-size: 24px;
+
+		cursor: text;
 		
 		margin: 0;
 	}

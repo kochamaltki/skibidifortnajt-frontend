@@ -24,11 +24,12 @@ class UniqueContainer<Type> {
 		return this.items;
 	}
 
-	public addItem(item: Type, id: number) {
-		if(this.ids.has(id)) return;
+	public addItem(item: Type, id: number): boolean {
+		if(this.ids.has(id)) return false;
 
 		this.items.push(item);
 		this.ids.add(id);
+		return true;
 	}
 }
 
@@ -40,7 +41,7 @@ export function createPostStore(apiUrl: string) {
 		currentLimit: 5
 	});
 
-	async function getPosts(endpoint: string) {
+	async function fetchPosts(endpoint: string) {
 		const value = get(data);
 		const res = await fetch(apiUrl + "/api/get/posts/" + endpoint + "/" + value.currentLimit + "/" + value.currentOffset);
 		let d = await res.json();
@@ -63,50 +64,29 @@ export function createPostStore(apiUrl: string) {
 			}
 		}));
 
-		console.log(value.currentOffset)
-		data.update(d => {
-			return {
-				...d,
-				currentOffset: value.currentOffset + post_arr.length
-			}
-		});
-
 		return post_arr;
 	}
 
-	async function fetchNewPosts(endpoint: string = "new") {
-		let post_arr = await getPosts(endpoint);
+	async function addNewPosts(endpoint: string = "new") {
+		let post_arr = await fetchPosts(endpoint);
 		if(post_arr.length == 0) return;
 
 		const value = get(data);
-		console.log(post_arr)
+		let realLength = 0;
 		for(let post of post_arr) {
-			value.posts.addItem(post, post.postId);
+			if(value.posts.addItem(post, post.postId)) {
+				realLength ++;
+			}
 		}
 
 		data.update((d: any) => {
 			return {
 				...d,
-				posts: value.posts
+				posts: value.posts,
+				currentOffset: (value.currentOffset + realLength)
 			}
 		});
 	}
-
-	async function fetchPosts(endpoint: string = "new") {
-		let post_arr = await getPosts(endpoint);
-
-		const value = get(data);
-		for(let post of post_arr) {
-			value.posts.addItem(post, post.postId);
-		}
-
-		data.update((d: any) => {
-			return {
-				...d,
-				posts: value.posts
-			}
-		});
-	};
 
 	async function addPost(body: string, tags: Array<string> = []): Promise<number> {
 		let endpoint: string = apiUrl + "/api/post/add-post";
@@ -177,8 +157,7 @@ export function createPostStore(apiUrl: string) {
 
 	return {
 		...data,
-		fetchPosts,
-		fetchNewPosts,
+		addNewPosts: addNewPosts,
 		addPost,
 		toggleCreatePostPrompt,
 		uploadFile,
