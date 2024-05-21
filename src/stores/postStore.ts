@@ -11,7 +11,7 @@ interface Post {
 	images: Array<string>;
 }
 
-class PostContainer<Type> {
+class UniqueContainer<Type> {
 	private items: Type[];
 	private ids: Set<number>;
 
@@ -34,7 +34,7 @@ class PostContainer<Type> {
 
 export function createPostStore(apiUrl: string) {
 	const data = writable({
-		posts: new PostContainer<Post>(),
+		posts: new UniqueContainer<Post>(),
 		showCreatePostPrompt: false,
 		currentOffset: 0,
 		currentLimit: 5
@@ -63,21 +63,23 @@ export function createPostStore(apiUrl: string) {
 			}
 		}));
 
+		console.log(value.currentOffset)
 		data.update(d => {
 			return {
 				...d,
-				currentOffset: value.currentOffset
+				currentOffset: value.currentOffset + post_arr.length
 			}
 		});
 
 		return post_arr;
 	}
 
-	async function fetchNewPosts(endpoint: string = "all") {
+	async function fetchNewPosts(endpoint: string = "new") {
 		let post_arr = await getPosts(endpoint);
 		if(post_arr.length == 0) return;
 
 		const value = get(data);
+		console.log(post_arr)
 		for(let post of post_arr) {
 			value.posts.addItem(post, post.postId);
 		}
@@ -90,7 +92,7 @@ export function createPostStore(apiUrl: string) {
 		});
 	}
 
-	async function fetchPosts(endpoint: string = "all") {
+	async function fetchPosts(endpoint: string = "new") {
 		let post_arr = await getPosts(endpoint);
 
 		const value = get(data);

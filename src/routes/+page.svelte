@@ -1,9 +1,11 @@
 <script lang="ts">
 	import Feed from "$components/Feed.svelte";
+
+	let feedType = "new";
 </script>
 
 <div class="container">
-	<Feed/>
+	<Feed {feedType}/>
 </div>
 
 <style lang="scss">

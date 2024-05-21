@@ -3,6 +3,7 @@
 	import { postStore } from "$stores/postStore";
 	import { onMount } from "svelte";
 
+	export let feedType = "new";
 	let fetching: boolean = false;
 	let cooldown: boolean = false;
 
@@ -20,7 +21,9 @@
 		cooldown = false;
 	};
 
-	onMount(postStore.fetchPosts);
+	onMount(() => {
+			postStore.fetchPosts(feedType);
+	});
 </script>
 
 <svelte:window 
@@ -32,20 +35,22 @@
 		if(scroll >= document.body.offsetHeight) {
 			fetching = true;
 			startCooldown();
-			await postStore.fetchNewPosts();
+			await postStore.fetchNewPosts(feedType);
 			fetching = false;
 		}
 
 	}}
 />
 
-<div class="container">
-	{#each $postStore.posts.getItems() as post}
-		<div class="post">
-			<Post {...post} bind:likeCount={post.likeCount}/>
-		</div>
-	{/each}
-</div>
+{#key feedType}
+	<div class="container">
+		{#each $postStore.posts.getItems() as post}
+			<div class="post">
+				<Post {...post} bind:likeCount={post.likeCount}/>
+			</div>
+		{/each}
+	</div>
+{/key}
 
 <style lang="scss">
 	.container {
