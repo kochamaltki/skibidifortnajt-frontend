@@ -4,16 +4,20 @@
 	import { userStore } from "$stores/userStore";
     import { postStore } from "$stores/postStore";
     import { goto } from "$app/navigation";
+    import Clickable from "$lib/shared/Clickable.svelte";
 
 	let input: string = "";
 	const searchPosts = (query: string) => {
-		setTimeout(() => goto(query), 0)
+		// normal goto doesnt work for some reason /shrug
+		setTimeout(() => goto(query), 0);
 	};
 </script>
 
 <div class="container">
 	<div class="logo">
-		<h1>Logo</h1>
+		<Clickable on:click={() => goto("/")}>
+			<h1>Logo</h1>
+		</Clickable>
 	</div>
 	<form on:submit={() => {
 		searchPosts(`/search/${input}`)
