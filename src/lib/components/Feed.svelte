@@ -4,18 +4,34 @@
 	import { onMount } from "svelte";
 
 	let fetching: boolean = false;
+	let cooldown: boolean = false;
+
+	const sleep = (duration: number) => {
+		return new Promise((r) => setTimeout(r, duration))
+	};
+
+	const startCooldown = async () => {
+		if(cooldown) {
+			return;
+		}
+
+		cooldown = true;
+		await sleep(500);
+		cooldown = false;
+	};
 
 	onMount(postStore.fetchPosts);
 </script>
 
 <svelte:window 
 	on:scroll={async () => {
-		if(fetching) return;
+		if(fetching || cooldown) return;
 
 		let scroll = window.innerHeight * 2 + window.scrollY;
 
 		if(scroll >= document.body.offsetHeight) {
 			fetching = true;
+			startCooldown();
 			await postStore.fetchNewPosts();
 			fetching = false;
 		}
@@ -24,9 +40,9 @@
 />
 
 <div class="container">
-	{#each $postStore.posts as post}
+	{#each $postStore.posts.getItems() as post}
 		<div class="post">
-			<Post {...post} bind:likeCount={post.likes}/>
+			<Post {...post} bind:likeCount={post.likeCount}/>
 		</div>
 	{/each}
 </div>
