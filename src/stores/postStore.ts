@@ -38,12 +38,25 @@ export function createPostStore(apiUrl: string) {
 		posts: new UniqueContainer<Post>(),
 		showCreatePostPrompt: false,
 		currentOffset: 0,
-		currentLimit: 5
+		currentLimit: 5,
+		currentEndpoint: "new"
 	});
 
-	async function fetchPosts(endpoint: string) {
+	async function changeEndpoint(endpoint: string) {
+		data.update((d: any) => {
+			return {
+				...d,
+				currentEndpoint: endpoint,
+				posts: new UniqueContainer<Post>(),
+				currentOffset: 0,
+				currentLimit: 5
+			}
+		});
+	}
+
+	async function fetchPosts(timestamp: string) {
 		const value = get(data);
-		const res = await fetch(apiUrl + "/api/get/posts/" + endpoint + "/" + value.currentLimit + "/" + value.currentOffset);
+		const res = await fetch(apiUrl + "/api/get/posts/" + value.currentEndpoint + "/" + value.currentLimit + "/" + value.currentOffset + "/" + timestamp);
 		let d = await res.json();
 
 
@@ -67,8 +80,15 @@ export function createPostStore(apiUrl: string) {
 		return post_arr;
 	}
 
-	async function addNewPosts(endpoint: string = "new") {
-		let post_arr = await fetchPosts(endpoint);
+	async function addNewPosts(timestamp: number|null = null) {
+		let post_arr;
+		if(timestamp === null) {
+			post_arr = await fetchPosts("");
+		}
+		else {
+			post_arr = await fetchPosts(timestamp.toString());
+		}
+
 		if(post_arr.length == 0) return;
 
 		const value = get(data);
@@ -161,7 +181,8 @@ export function createPostStore(apiUrl: string) {
 		addPost,
 		toggleCreatePostPrompt,
 		uploadFile,
-		addImageToPost
+		addImageToPost,
+		changeEndpoint
 	};
 }
 

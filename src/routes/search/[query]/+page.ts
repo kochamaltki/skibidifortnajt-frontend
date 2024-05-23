@@ -7,5 +7,5 @@ export const load: PageLoad = ({ params }) => {
 }
 
 export interface SearchPageData {
-    username: string
+    query: string
 }

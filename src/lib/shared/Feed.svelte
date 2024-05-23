@@ -4,6 +4,8 @@
 	import { onMount } from "svelte";
 
 	export let feedType = "new";
+	export let timestamp: number|null = null;
+
 	let fetching: boolean = false;
 	let cooldown: boolean = false;
 	let waiting: boolean = false;
@@ -15,7 +17,7 @@
 	const fetchPosts = async () => {
 		fetching = true;
 		startCooldown();
-		await postStore.addNewPosts(feedType);
+		await postStore.addNewPosts(timestamp);
 		fetching = false;
 	}
 
@@ -31,7 +33,8 @@
 	};
 
 	onMount(() => {
-			postStore.addNewPosts(feedType);
+			postStore.changeEndpoint(feedType);
+			postStore.addNewPosts(timestamp);
 	});
 </script>
 

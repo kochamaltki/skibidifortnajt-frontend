@@ -12,6 +12,8 @@
 		// normal goto doesnt work for some reason /shrug
 		setTimeout(() => goto(query), 0);
 	};
+
+	const isWhitespaceString = (str: string) => !/\S/.test(str);
 </script>
 
 <div class="container">
@@ -21,7 +23,9 @@
 		</Clickable>
 	</div>
 	<form on:submit={() => {
-		searchPosts(`/search/${input}`)
+		if(!isWhitespaceString(input)) {
+			searchPosts(`/search/${encodeURI(input)}`)
+		}
 	}}>
 		<div class="input">
 			<Input bind:input={input} placeholder="Search..." type="search">

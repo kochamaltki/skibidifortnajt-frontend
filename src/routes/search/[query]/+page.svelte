@@ -1,7 +1,10 @@
 <script lang="ts">
-    import type { SearchPageData } from "./+page";
+    import Feed from "$lib/shared/Feed.svelte";
+import type { SearchPageData } from "./+page";
 
     export let data: SearchPageData;
 </script>
 
-query: {data.query}
+{#key data.query}
+	<Feed feedType={`from-search/${data.query}`}/>
+{/key}

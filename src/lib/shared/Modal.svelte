@@ -43,7 +43,7 @@
 	}
 
 	.container {
-		z-index: 10;
+		z-index: 99;
 		cursor: auto;
 		user-select: text;
 	}
