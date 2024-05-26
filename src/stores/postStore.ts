@@ -66,6 +66,27 @@ export function createPostStore(apiUrl: string) {
 			});
 	}
 
+	async function getPostFromId(id: number): Promise<Post> {
+		const res = await fetch(apiUrl + "/api/get/posts/by-id/" + id);
+		let d = await res.json();
+
+
+		let response = await fetch(apiUrl + "/api/get/images/from-post/" + d.post_id);
+		let images = (await response.json()).image_list.map((image: string) => {
+			return apiUrl + "/api/get/image/" + image;
+		});
+
+		return {
+			datePosted: d.date * 1000,
+			content: d.body,
+			likeCount: d.likes,
+			postId: d.post_id,
+			displayName: d.user_name,
+			userId: d.user_id,
+			images: images
+		}
+	}
+
 	async function fetchPosts(timestamp: string) {
 		const value = get(data);
 		const res = await fetch(apiUrl + "/api/get/posts/" + value.currentEndpoint + "/" + value.currentLimit + "/" + value.currentOffset + "/" + timestamp);
@@ -181,7 +202,8 @@ export function createPostStore(apiUrl: string) {
 		uploadFile,
 		addImageToPost,
 		changeEndpoint,
-		search
+		search,
+		getPostFromId
 	};
 }
 
