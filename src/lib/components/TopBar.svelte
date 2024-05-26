@@ -8,7 +8,7 @@
     import { goto } from "$app/navigation";
 
 	let input: string = "";
-	const searchPosts = (query: string) => {
+	const workingGoto = (query: string) => {
 		// normal goto doesnt work for some reason /shrug
 		setTimeout(() => goto(query), 0);
 	};
@@ -24,7 +24,10 @@
 	</div>
 	<form on:submit={() => {
 		if(!isWhitespaceString(input)) {
-			searchPosts(`/search/${encodeURI(input)}`)
+			workingGoto(`/search/${encodeURI(input)}`);
+		}
+		else {
+			workingGoto("/top");
 		}
 	}}>
 		<div class="input">
