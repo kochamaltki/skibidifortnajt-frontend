@@ -38,28 +38,6 @@
 
 	$: likes = formatter.format(likeCount);
 
-	const formatHashtags = (content: string) => {
-		const regex = /(#\w+)/gi;
-
-		let out = content
-			.split(regex)
-			.map(chunk => {
-				if(chunk[0] == "#") {
-					return {
-						value: chunk,
-						hashtag: true
-					}
-				}
-
-				return {
-					value: chunk.replace(/^ /, ""),
-					hashtag: false
-				}
-		});
-
-		return out;
-	};
-
 	const checkLiked = async () => {
 		if($userStore.loggedIn) {
 			let res = await fetch(apiUrl+`/api/get/like/${postId}/${$userStore.id}`);

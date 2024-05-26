@@ -59,7 +59,7 @@ export function createPostStore(apiUrl: string) {
 	function changeEndpoint(endpoint: string) {
 		updateStore({
 				currentEndpoint: endpoint,
-				posts: new UniqueContainer<Post>(),
+				posts: new UniqueContainer<Post, number>(),
 				currentOffset: 0,
 				currentLimit: 5,
 				searchTerm: ""
