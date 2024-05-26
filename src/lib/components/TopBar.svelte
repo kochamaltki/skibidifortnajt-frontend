@@ -30,6 +30,9 @@
 		<div class="input">
 			<Input bind:input={input} placeholder="Search..." type="search">
 				<svg slot="left" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="search"><path fill="#313646" d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"></path></svg>
+				<Clickable slot="right">
+					<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="sliders-v-alt"><path fill="#313646" d="M20,8.18V3a1,1,0,0,0-2,0V8.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V13.82a3,3,0,0,0,0-5.64ZM19,12a1,1,0,1,1,1-1A1,1,0,0,1,19,12Zm-6,2.18V3a1,1,0,0,0-2,0V14.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V19.82a3,3,0,0,0,0-5.64ZM12,18a1,1,0,1,1,1-1A1,1,0,0,1,12,18ZM6,6.18V3A1,1,0,0,0,4,3V6.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V11.82A3,3,0,0,0,6,6.18ZM5,10A1,1,0,1,1,6,9,1,1,0,0,1,5,10Z"></path></svg>
+				</Clickable>
 			</Input>
 		</div>
 	</form>

@@ -5,22 +5,18 @@
 	export let showModal: boolean = true;
 </script>
 
-<svelte:window on:wheel|nonpassive|={e => {
-	if(showModal)
-		e.preventDefault();
-}} />
 {#if showModal}
-<Clickable on:click={() => {showModal = false}}>
-	<div class="background">
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<!-- svelte-ignore a11y-no-static-element-interactions -->
-		<div class="container" on:click|stopPropagation>
-			<Card>
-				<slot/>
-			</Card>
+	<Clickable on:click={() => {showModal = false}}>
+		<div class="background">
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<!-- svelte-ignore a11y-no-static-element-interactions -->
+			<div class="container" on:click|stopPropagation>
+				<Card limitheight={true}>
+					<slot/>
+				</Card>
+			</div>
 		</div>
-	</div>
-</Clickable>
+	</Clickable>
 {/if}
 
 <style lang="scss">
@@ -47,5 +43,4 @@
 		cursor: auto;
 		user-select: text;
 	}
-
 </style>

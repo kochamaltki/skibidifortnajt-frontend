@@ -11,20 +11,20 @@ interface Post {
 	images: Array<string>;
 }
 
-class UniqueContainer<Type> {
-	private items: Type[];
-	private ids: Set<number>;
+export class UniqueContainer<ItemType, IdType> {
+	private items: ItemType[];
+	private ids: Set<IdType>;
 
 	constructor() {
 		this.items = [];
-		this.ids = new Set<number>();
+		this.ids = new Set<IdType>();
 	}
 
-	public getItems(): Type[] {
+	public getItems(): ItemType[] {
 		return this.items;
 	}
 
-	public addItem(item: Type, id: number): boolean {
+	public addItem(item: ItemType, id: IdType): boolean {
 		if(this.ids.has(id)) return false;
 
 		this.items.push(item);
@@ -35,7 +35,7 @@ class UniqueContainer<Type> {
 
 export function createPostStore(apiUrl: string) {
 	const data = writable({
-		posts: new UniqueContainer<Post>(),
+		posts: new UniqueContainer<Post, number>(),
 		showCreatePostPrompt: false,
 		currentOffset: 0,
 		currentLimit: 5,

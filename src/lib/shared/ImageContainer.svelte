@@ -87,6 +87,7 @@
 		height: 100%;
 		width: 100%;
 		max-height: inherit;
+		min-height: 200px;
 
 		object-fit: contain;
 
