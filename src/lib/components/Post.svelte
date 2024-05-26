@@ -8,8 +8,10 @@
 	import Card from '$lib/shared/Card.svelte';
 	import Clickable from '$lib/shared/Clickable.svelte';
 	import ImageContainer from '$lib/shared/ImageContainer.svelte';
+	import PostContent from './PostContent.svelte';
 
 	import apiUrl from '$stores/apiUrl';
+    import { postStore } from '$stores/postStore';
 
 	const formatter = Intl.NumberFormat("en", { notation: "compact" })
 
@@ -71,7 +73,7 @@
 
 	checkLiked();
 	$: $userStore.loggedIn, checkLiked();
-	$: chunks = formatHashtags(content);
+	// $: chunks = formatHashtags(content);
 
 	const format = (date: number) => {
 		return formatDistance(new Date(date), new Date(), { addSuffix: true });
@@ -133,17 +135,7 @@
 			</div>
 		</div>
 
-		<h2>
-			{#each chunks as chunk}
-				{#if chunk.hashtag}
-					<!-- <Clickable> -->
-						<span class="hashtag">{chunk.value}</span>
-					<!-- </Clickable> -->
-				{:else}
-					{chunk.value}
-				{/if}
-			{/each}
-		</h2>
+		<PostContent {content} searchTerm={$postStore.searchTerm}/>
 
 		{#if images.length}
 			<div class="images">
@@ -189,26 +181,11 @@
 		cursor: auto;
 	}
 
-	.hashtag {
-		color: $accent;
-	}
-
 	h1 {
 		color: $white;
 		font-weight: 550;
 		font-size: 24px;
 
-		margin: 0;
-	}
-
-	h2 {
-		white-space: pre-wrap;
-		color: $white;
-		font-weight: normal;
-		font-size: 24px;
-
-		cursor: text;
-		
 		margin: 0;
 	}
 

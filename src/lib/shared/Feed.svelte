@@ -5,6 +5,7 @@
 
 	export let feedType = "new";
 	export let timestamp: number|null = null;
+	export let searchTerm = "";
 
 	let fetching: boolean = false;
 	let cooldown: boolean = false;
@@ -34,6 +35,7 @@
 
 	onMount(() => {
 			postStore.changeEndpoint(feedType);
+			postStore.search(searchTerm);
 			postStore.addNewPosts(timestamp);
 	});
 </script>

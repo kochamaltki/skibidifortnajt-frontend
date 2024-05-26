@@ -39,19 +39,31 @@ export function createPostStore(apiUrl: string) {
 		showCreatePostPrompt: false,
 		currentOffset: 0,
 		currentLimit: 5,
-		currentEndpoint: "new"
+		currentEndpoint: "new",
+		searchTerm: ""
 	});
 
-	async function changeEndpoint(endpoint: string) {
+	function updateStore(newData: any) {
 		data.update((d: any) => {
 			return {
 				...d,
+				...newData
+			}
+		})
+	}
+
+	function search(searchTerm: string) {
+		updateStore({searchTerm: searchTerm});
+	}
+
+	function changeEndpoint(endpoint: string) {
+		updateStore({
 				currentEndpoint: endpoint,
 				posts: new UniqueContainer<Post>(),
 				currentOffset: 0,
-				currentLimit: 5
-			}
-		});
+				currentLimit: 5,
+				searchTerm: ""
+			});
 	}
 
 	async function fetchPosts(timestamp: string) {
@@ -99,13 +111,10 @@ export function createPostStore(apiUrl: string) {
 			}
 		}
 
-		data.update((d: any) => {
-			return {
-				...d,
+		updateStore({
 				posts: value.posts,
 				currentOffset: (value.currentOffset + realLength)
-			}
-		});
+			});
 	}
 
 	async function addPost(body: string, tags: Array<string> = []): Promise<number> {
@@ -124,13 +133,7 @@ export function createPostStore(apiUrl: string) {
 
 		let post_id = await res.json();
 
-		data.update(d => {
-			return {
-				...d,
-				showCreatePostPrompt: false,
-			};
-		});
-
+		updateStore({showCreatePostPrompt: false});
 		return post_id;
 	};
 
@@ -167,12 +170,7 @@ export function createPostStore(apiUrl: string) {
 	};
 
 	function toggleCreatePostPrompt() {
-		data.update(d => {
-			return {
-				...d,
-				showCreatePostPrompt: !d.showCreatePostPrompt,
-			};
-		});
+		updateStore({showCreatePostPrompt: !get(data).showCreatePostPrompt});
 	};
 
 	return {
@@ -182,7 +180,8 @@ export function createPostStore(apiUrl: string) {
 		toggleCreatePostPrompt,
 		uploadFile,
 		addImageToPost,
-		changeEndpoint
+		changeEndpoint,
+		search
 	};
 }
 

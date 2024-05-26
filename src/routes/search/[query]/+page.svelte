@@ -6,5 +6,5 @@ import type { SearchPageData } from "./+page";
 </script>
 
 {#key data.query}
-	<Feed feedType={`from-search/${data.query}`} timestamp={0}/>
+	<Feed feedType={`from-search/${data.query}`} timestamp={0} searchTerm={data.query}/>
 {/key}
