@@ -1,8 +1,15 @@
 <script lang="ts">
 	import Card from "$lib/shared/Card.svelte";
 	import { sideProfileStore } from "$lib/sideProfileStore";
+	import { userStore } from "$lib/userStore";
+    import { get } from "svelte/store";
 
-	sideProfileStore.hideSideProfile();
+	let data = get(userStore);
+	if(data.loggedIn) {
+		sideProfileStore.viewSideProfile(data.id);
+	} else {
+		sideProfileStore.hideSideProfile();
+	}
 </script>
 
 <!--
