@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { UserPageData } from "./+page";
-	import { userStore } from "$stores/userStore";
+	import { userStore } from "$lib/userStore";
 	import Feed from "$lib/shared/Feed.svelte";
 
     export let data: UserPageData;

@@ -2,7 +2,6 @@
 	import { formatDistance } from 'date-fns'
 	import { scale } from 'svelte/transition'
 	import { elasticOut } from 'svelte/easing'
-	import { userStore } from '$stores/userStore';
 	import { goto } from '$app/navigation';
 
 	import Card from '$lib/shared/Card.svelte';
@@ -10,8 +9,9 @@
 	import ImageContainer from '$lib/shared/ImageContainer.svelte';
 	import PostContent from './PostContent.svelte';
 
-	import apiUrl from '$stores/apiUrl';
-    import { postStore } from '$stores/postStore';
+	import apiUrl from '$lib/apiUrl';
+    import { postStore } from '$lib/postStore';
+	import { userStore } from '$lib/userStore';
 
 	const formatter = Intl.NumberFormat("en", { notation: "compact" })
 

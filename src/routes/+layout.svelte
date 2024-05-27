@@ -8,11 +8,11 @@
 	import Card from '$lib/shared/Card.svelte';
 	import Clickable from '$lib/shared/Clickable.svelte';
 	
-	import { userStore } from '$stores/userStore';
-	import apiUrl from '$stores/apiUrl';
+	import apiUrl from '$lib/apiUrl';
 
 	import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
+    import { userStore } from '$lib/userStore';
 
 	onMount(async () => {
 		fetch(apiUrl + "/api/get/cookie", {

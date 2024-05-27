@@ -4,7 +4,7 @@
 	import Input from "$lib/shared/Input.svelte";
 	import Checkbox from "$lib/shared/Checkbox.svelte";
 
-	import { userStore } from "$stores/userStore";
+	import { userStore } from "$lib/userStore";
 
 	let hasValidInput: boolean = true;
 	$: hasValidInput = usernameInput != "" && passwordInput != "";

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { UniqueContainer } from "$stores/postStore";
+	import { UniqueContainer } from "$lib/uniqueContainer";
 
 	export let files: any = [];
 	let urls: UniqueContainer<{filename:string, url:string}, string> = new UniqueContainer<{filename:string, url:string}, string>;

@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { PostPageData } from "./+page";
 	import Post from "$components/Post.svelte";
-	import { postStore } from "$stores/postStore";
+	import { postStore } from "$lib/postStore";
 
     export let data: PostPageData;
 </script>

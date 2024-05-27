@@ -4,7 +4,7 @@
 	import TextArea from "$lib/shared/TextArea.svelte";
 	import ImagePicker from "$lib/shared/ImagePicker.svelte";
 
-	import { postStore } from "$stores/postStore";
+	import { postStore } from "$lib/postStore";
 
 	let postBody: string = "";
 	$: hasValidInput = postBody != "";
