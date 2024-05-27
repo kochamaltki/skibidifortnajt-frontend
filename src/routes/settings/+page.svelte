@@ -1,5 +1,8 @@
 <script lang="ts">
 	import Card from "$lib/shared/Card.svelte";
+	import { sideProfileStore } from "$lib/sideProfileStore";
+
+	sideProfileStore.hideSideProfile();
 </script>
 
 <!--

@@ -7,8 +7,10 @@
 	import CreatePost from '$components/CreatePost.svelte';
 	import Card from '$lib/shared/Card.svelte';
 	import Clickable from '$lib/shared/Clickable.svelte';
+	import SideProfile from '$components/SideProfile.svelte';
 	
 	import apiUrl from '$lib/apiUrl';
+	import { sideProfileStore } from '$lib/sideProfileStore';
 
 	import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
@@ -85,9 +87,9 @@
 	</div>
 
 	<div class="right">
-		<!-- <Card> -->
-			
-		<!-- </Card> -->
+		{#if $sideProfileStore.showSideProfile}
+			<SideProfile/>
+		{/if}
 	</div>
 
 	<SignUp/>
