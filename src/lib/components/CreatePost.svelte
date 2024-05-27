@@ -2,6 +2,7 @@
 	import Modal from "$lib/shared/Modal.svelte";
 	import Button from "$lib/shared/Button.svelte";
 	import TextArea from "$lib/shared/TextArea.svelte";
+	import ImagePicker from "$lib/shared/ImagePicker.svelte";
 
 	import { postStore } from "$stores/postStore";
 
@@ -38,7 +39,6 @@
 </script>
 
 <Modal bind:showModal={$postStore.showCreatePostPrompt}>
-	<input bind:files={files} id="file-input" type="file" accept="image/*">
 	<form on:submit|preventDefault={handlePost}>
 		<div class="container">
 			<h1>Create Post</h1>
@@ -47,14 +47,18 @@
 			</div>
 
 			<div class="input">
+				<ImagePicker bind:files={files}/>
+			</div>
+
+			<div class="input">
 				<Button type="submit" big={true} disabled={!hasValidInput} style={hasValidInput ? "accent" : "background"}>
 					Publish
 				</Button>
 
-				{#if {error}}
-					<h2> {errorMessage} </h2>
-				{/if}
 			</div>
+			{#if {error}}
+				<h2> {errorMessage} </h2>
+			{/if}
 		</div>
 	</form>
 </Modal>
@@ -72,7 +76,7 @@
 		width: 100%;
 		display: flex;
 		flex-direction: column;
-		gap: 20px;
+		gap: 40px;
 		align-items: center;
 	}
 
@@ -85,11 +89,12 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 60px;
+		gap: 20px;
 	}
 
 	h1 {
 		margin: 0;
+		margin-bottom: 40px;
 		font-size: 36px;
 	}
 </style>

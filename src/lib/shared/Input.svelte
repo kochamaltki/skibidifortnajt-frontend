@@ -13,7 +13,7 @@
 <div class="container">
 	<div class="left">
 		<slot name="left"/>
-		<input value={input} {type} {placeholder} {required} on:input={handleInput} on:submit autocomplete="on">
+		<input value={input} {type} {placeholder} {required} on:input={handleInput} autocomplete="on">
 	</div>
 	<slot name="right"/>
 </div>

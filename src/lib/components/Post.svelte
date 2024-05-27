@@ -2,13 +2,16 @@
 	import { formatDistance } from 'date-fns'
 	import { scale } from 'svelte/transition'
 	import { elasticOut } from 'svelte/easing'
+	import { userStore } from '$stores/userStore';
+	import { goto } from '$app/navigation';
 
 	import Card from '$lib/shared/Card.svelte';
 	import Clickable from '$lib/shared/Clickable.svelte';
+	import ImageContainer from '$lib/shared/ImageContainer.svelte';
+	import PostContent from './PostContent.svelte';
 
 	import apiUrl from '$stores/apiUrl';
-	import { userStore } from '$stores/userStore';
-    import ImageContainer from '$lib/shared/ImageContainer.svelte';
+    import { postStore } from '$stores/postStore';
 
 	const formatter = Intl.NumberFormat("en", { notation: "compact" })
 
@@ -35,28 +38,6 @@
 
 	$: likes = formatter.format(likeCount);
 
-	const formatHashtags = (content: string) => {
-		const regex = /(#\w+)/gi;
-
-		let out = content
-			.split(regex)
-			.map(chunk => {
-				if(chunk[0] == "#") {
-					return {
-						value: chunk,
-						hashtag: true
-					}
-				}
-
-				return {
-					value: chunk.replace(/^ /, ""),
-					hashtag: false
-				}
-		});
-
-		return out;
-	};
-
 	const checkLiked = async () => {
 		if($userStore.loggedIn) {
 			let res = await fetch(apiUrl+`/api/get/like/${postId}/${$userStore.id}`);
@@ -70,7 +51,7 @@
 
 	checkLiked();
 	$: $userStore.loggedIn, checkLiked();
-	$: chunks = formatHashtags(content);
+	// $: chunks = formatHashtags(content);
 
 	const format = (date: number) => {
 		return formatDistance(new Date(date), new Date(), { addSuffix: true });
@@ -114,7 +95,9 @@
 <Card>
 	<div class="container">
 		<div class="top">
-			<Clickable>
+			<Clickable on:click={async () => {
+				goto(`/user/${(await userStore.getUserData(userId)).username}`)
+			}}>
 				<div class="profile">
 					<img src="{profilePictureUrl}" alt="profile-pic" class="profile-pic">
 					<div class="username">
@@ -130,17 +113,7 @@
 			</div>
 		</div>
 
-		<h2>
-			{#each chunks as chunk}
-				{#if chunk.hashtag}
-					<!-- <Clickable> -->
-						<span class="hashtag">{chunk.value}</span>
-					<!-- </Clickable> -->
-				{:else}
-					{chunk.value}
-				{/if}
-			{/each}
-		</h2>
+		<PostContent {content} searchTerm={$postStore.searchTerm}/>
 
 		{#if images.length}
 			<div class="images">
@@ -160,7 +133,9 @@
 						{likes}
 					</div>
 				</Clickable>
-				<Clickable>
+				<Clickable on:click={() => {
+					goto(`/post/${postId}`)
+				}}>
 					<div class="stat">
 						<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="comment"><path fill="#f0f0f0" d="M12,2A10,10,0,0,0,2,12a9.89,9.89,0,0,0,2.26,6.33l-2,2a1,1,0,0,0-.21,1.09A1,1,0,0,0,3,22h9A10,10,0,0,0,12,2Zm0,18H5.41l.93-.93a1,1,0,0,0,0-1.41A8,8,0,1,1,12,20Z"></path></svg>
 						{commentCount}
@@ -181,10 +156,7 @@
 
 	.images {
 		border-radius: 20px;
-	}
-
-	.hashtag {
-		color: $accent;
+		cursor: auto;
 	}
 
 	h1 {
@@ -192,15 +164,6 @@
 		font-weight: 550;
 		font-size: 24px;
 
-		margin: 0;
-	}
-
-	h2 {
-		white-space: pre-wrap;
-		color: $white;
-		font-weight: normal;
-		font-size: 24px;
-		
 		margin: 0;
 	}
 

@@ -13,6 +13,25 @@ export function createUserStore(apiUrl: string) {
 		showSignUpPrompt: false
 	});
 
+	async function getUserData(id: number) {
+		let res = await fetch(apiUrl + "/api/get/profile/by-id/" + id);
+		let d: any = await res.json();
+
+		return {
+			username: d.user_name,
+			displayName: d.display_name,
+			description: d.description,
+			id: id,
+		};
+	}
+
+	async function getUserId(username: string) {
+		let res = await fetch(apiUrl + "/api/get/user/id/" + username);
+		let id = await res.json();
+
+		return id;
+	}
+
 	async function logInWithId(id: number) {
 		let res = await fetch(apiUrl + "/api/get/profile/by-id/" + id);
 		let d: any = await res.json();
@@ -30,10 +49,7 @@ export function createUserStore(apiUrl: string) {
 	}
 
 	async function logInWithUsername(username: string) {
-		let res = await fetch(apiUrl + "/api/get/user/id/" + username);
-		let id = await res.json();
-			
-		return logInWithId(id);
+		return logInWithId(await getUserId(username));
 	}
 
 	async function logIn(username: string, password: string, keepLoggedIn: boolean) {
@@ -127,6 +143,8 @@ export function createUserStore(apiUrl: string) {
 
 	return {
 		...data,
+		getUserData,
+		getUserId,
 		logInWithId,
 		logInWithUsername,
 		toggleLogInPrompt,

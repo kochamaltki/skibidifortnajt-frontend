@@ -1,11 +1,11 @@
 <script lang="ts">
 	import Feed from "$lib/shared/Feed.svelte";
 
-	let feedType = "new";
+	let feedType = "trending";
 </script>
 
 <div class="container">
-	<Feed {feedType}/>
+	<Feed {feedType} timestamp={0}/>
 </div>
 
 <style lang="scss">

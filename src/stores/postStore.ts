@@ -11,38 +11,85 @@ interface Post {
 	images: Array<string>;
 }
 
-class PostContainer<Type> {
-	private items: Type[];
-	private ids: Set<number>;
+export class UniqueContainer<ItemType, IdType> {
+	private items: ItemType[];
+	private ids: Set<IdType>;
 
 	constructor() {
 		this.items = [];
-		this.ids = new Set<number>();
+		this.ids = new Set<IdType>();
 	}
 
-	public getItems(): Type[] {
+	public getItems(): ItemType[] {
 		return this.items;
 	}
 
-	public addItem(item: Type, id: number) {
-		if(this.ids.has(id)) return;
+	public addItem(item: ItemType, id: IdType): boolean {
+		if(this.ids.has(id)) return false;
 
 		this.items.push(item);
 		this.ids.add(id);
+		return true;
 	}
 }
 
 export function createPostStore(apiUrl: string) {
 	const data = writable({
-		posts: new PostContainer<Post>(),
+		posts: new UniqueContainer<Post, number>(),
 		showCreatePostPrompt: false,
 		currentOffset: 0,
-		currentLimit: 5
+		currentLimit: 5,
+		currentEndpoint: "new",
+		searchTerm: ""
 	});
 
-	async function getPosts(endpoint: string) {
+	function updateStore(newData: any) {
+		data.update((d: any) => {
+			return {
+				...d,
+				...newData
+			}
+		})
+	}
+
+	function search(searchTerm: string) {
+		updateStore({searchTerm: searchTerm});
+	}
+
+	function changeEndpoint(endpoint: string) {
+		updateStore({
+				currentEndpoint: endpoint,
+				posts: new UniqueContainer<Post, number>(),
+				currentOffset: 0,
+				currentLimit: 5,
+				searchTerm: ""
+			});
+	}
+
+	async function getPostFromId(id: number): Promise<Post> {
+		const res = await fetch(apiUrl + "/api/get/posts/by-id/" + id);
+		let d = await res.json();
+
+
+		let response = await fetch(apiUrl + "/api/get/images/from-post/" + d.post_id);
+		let images = (await response.json()).image_list.map((image: string) => {
+			return apiUrl + "/api/get/image/" + image;
+		});
+
+		return {
+			datePosted: d.date * 1000,
+			content: d.body,
+			likeCount: d.likes,
+			postId: d.post_id,
+			displayName: d.user_name,
+			userId: d.user_id,
+			images: images
+		}
+	}
+
+	async function fetchPosts(timestamp: string) {
 		const value = get(data);
-		const res = await fetch(apiUrl + "/api/get/posts/" + endpoint + "/" + value.currentLimit + "/" + value.currentOffset);
+		const res = await fetch(apiUrl + "/api/get/posts/" + value.currentEndpoint + "/" + value.currentLimit + "/" + value.currentOffset + "/" + timestamp);
 		let d = await res.json();
 
 
@@ -63,48 +110,33 @@ export function createPostStore(apiUrl: string) {
 			}
 		}));
 
-		data.update(d => {
-			return {
-				...d,
-				currentOffset: value.currentOffset
-			}
-		});
-
 		return post_arr;
 	}
 
-	async function fetchNewPosts(endpoint: string = "all") {
-		let post_arr = await getPosts(endpoint);
+	async function addNewPosts(timestamp: number|null = null) {
+		let post_arr;
+		if(timestamp === null) {
+			post_arr = await fetchPosts("");
+		}
+		else {
+			post_arr = await fetchPosts(timestamp.toString());
+		}
+
 		if(post_arr.length == 0) return;
 
 		const value = get(data);
+		let realLength = 0;
 		for(let post of post_arr) {
-			value.posts.addItem(post, post.postId);
+			if(value.posts.addItem(post, post.postId)) {
+				realLength ++;
+			}
 		}
 
-		data.update((d: any) => {
-			return {
-				...d,
-				posts: value.posts
-			}
-		});
+		updateStore({
+				posts: value.posts,
+				currentOffset: (value.currentOffset + realLength)
+			});
 	}
-
-	async function fetchPosts(endpoint: string = "all") {
-		let post_arr = await getPosts(endpoint);
-
-		const value = get(data);
-		for(let post of post_arr) {
-			value.posts.addItem(post, post.postId);
-		}
-
-		data.update((d: any) => {
-			return {
-				...d,
-				posts: value.posts
-			}
-		});
-	};
 
 	async function addPost(body: string, tags: Array<string> = []): Promise<number> {
 		let endpoint: string = apiUrl + "/api/post/add-post";
@@ -122,13 +154,7 @@ export function createPostStore(apiUrl: string) {
 
 		let post_id = await res.json();
 
-		data.update(d => {
-			return {
-				...d,
-				showCreatePostPrompt: false,
-			};
-		});
-
+		updateStore({showCreatePostPrompt: false});
 		return post_id;
 	};
 
@@ -165,22 +191,19 @@ export function createPostStore(apiUrl: string) {
 	};
 
 	function toggleCreatePostPrompt() {
-		data.update(d => {
-			return {
-				...d,
-				showCreatePostPrompt: !d.showCreatePostPrompt,
-			};
-		});
+		updateStore({showCreatePostPrompt: !get(data).showCreatePostPrompt});
 	};
 
 	return {
 		...data,
-		fetchPosts,
-		fetchNewPosts,
+		addNewPosts: addNewPosts,
 		addPost,
 		toggleCreatePostPrompt,
 		uploadFile,
-		addImageToPost
+		addImageToPost,
+		changeEndpoint,
+		search,
+		getPostFromId
 	};
 }
 
