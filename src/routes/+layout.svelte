@@ -73,9 +73,9 @@
 	</div>
 
 	<div class="right">
-		<Card>
-			TOILET
-		</Card>
+		<!-- <Card> -->
+			
+		<!-- </Card> -->
 	</div>
 
 	<SignUp/>
