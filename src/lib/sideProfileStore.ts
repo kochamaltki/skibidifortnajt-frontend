@@ -1,8 +1,7 @@
 import { writable } from "svelte/store";
 import { userStore } from "./userStore";
-import apiUrl from "./apiUrl";
 
-export function createSideProfileStore(apiUrl: string) {
+export function createSideProfileStore() {
 	const data = writable({
 		username: "username",
 		displayName: "displayName",
@@ -47,4 +46,4 @@ export function createSideProfileStore(apiUrl: string) {
 	};
 }
 
-export const sideProfileStore = createSideProfileStore(apiUrl)
+export const sideProfileStore = createSideProfileStore()
