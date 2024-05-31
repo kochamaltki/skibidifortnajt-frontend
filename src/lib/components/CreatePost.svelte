@@ -14,8 +14,11 @@
 	let files: any = [];
 
 	let imageIds: number[] = [];
+	let uploading: number = 0;
 
 	const handlePost = async () => {
+		await until(() => uploading === 0);
+		
 		let id = await postStore.addPost(postBody);
 		postBody = "";
 
@@ -27,10 +30,21 @@
 		files = [];
 	}
 
+	const until = async (condition: Function) => {
+		const poll = (resolve: Function)  => {
+			if(condition()) resolve();
+			else setTimeout(() => poll(resolve), 400);
+		}
+
+		return new Promise(poll);
+	}
+
 	const handleUpload = async () => {
+		uploading ++;
 		let fileId = await postStore.uploadFile(files[0]);
 
 		imageIds = [...imageIds, fileId];
+		uploading --;
 	}
 
 	$: if (files.length) {
