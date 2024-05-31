@@ -52,13 +52,15 @@ export function createPostStore(apiUrl: string) {
 			content: d.body,
 			likeCount: d.likes,
 			postId: d.post_id,
-			displayName: d.user_name,
+			username: d.user_name,
 			userId: d.user_id,
-			images: images
+			images: images,
+			displayName: d.display_name,
+			profilePicture: d.pfp_image
 		}
 	}
 
-	async function fetchPosts(timestamp: string) {
+	async function fetchPosts(timestamp: string): Promise<Array<Post>> {
 		const value = get(data);
 		const res = await fetch(apiUrl + "/api/get/posts/" + value.currentEndpoint + "/" + value.currentLimit + "/" + value.currentOffset + "/" + timestamp);
 		let d = await res.json();
@@ -75,9 +77,11 @@ export function createPostStore(apiUrl: string) {
 				content: post.body,
 				likeCount: post.likes,
 				postId: post.post_id,
-				displayName: post.user_name,
+				username: post.user_name,
 				userId: post.user_id,
-				images: images
+				images: images,
+				displayName: post.display_name,
+				profilePicture: post.pfp_image
 			}
 		}));
 

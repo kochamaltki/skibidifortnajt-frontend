@@ -6,4 +6,6 @@ export interface Post {
 	displayName: string;
 	userId: number;
 	images: Array<string>;
+	profilePicture: string;
+	username: string;
 }

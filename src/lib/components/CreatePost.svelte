@@ -5,6 +5,7 @@
 	import ImagePicker from "$lib/shared/ImagePicker.svelte";
 
 	import { postStore } from "$lib/postStore";
+	import until from "$lib/until";
 
 	let postBody: string = "";
 	$: hasValidInput = postBody != "";
@@ -28,15 +29,6 @@
 
 		imageIds = [];
 		files = [];
-	}
-
-	const until = async (condition: Function) => {
-		const poll = (resolve: Function)  => {
-			if(condition()) resolve();
-			else setTimeout(() => poll(resolve), 400);
-		}
-
-		return new Promise(poll);
 	}
 
 	const handleUpload = async () => {

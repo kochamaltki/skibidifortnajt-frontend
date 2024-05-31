@@ -27,7 +27,7 @@
 			</div>
 		</div>
 	{/if}
-	<input bind:files={files} id="file-input" type="file" accept="image/*">
+	<input bind:files={files} id="file-input" type="file" accept="image/png">
 </label>
 
 
