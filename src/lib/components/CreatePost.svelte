@@ -41,10 +41,14 @@
 
 	const handleUpload = async () => {
 		uploading ++;
-		let fileId = await postStore.uploadFile(files[0]);
-
-		imageIds = [...imageIds, fileId];
-		uploading --;
+		postStore.uploadFile(files[0])
+			.then(fileId => {
+				imageIds = [...imageIds, fileId];
+				uploading --;
+			})
+			.catch(_ => {
+				uploading --;
+			});
 	}
 
 	$: if (files.length) {
