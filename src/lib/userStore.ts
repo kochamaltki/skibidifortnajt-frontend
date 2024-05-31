@@ -1,4 +1,4 @@
-import { writable } from "svelte/store";
+import { get, writable } from "svelte/store";
 import apiUrl from "./apiUrl";
 
 export function createUserStore(apiUrl: string) {
@@ -6,6 +6,7 @@ export function createUserStore(apiUrl: string) {
 		username: "username",
 		displayName: "displayName",
 		description: "description",
+		profilePicture: "",
 		id: -1,
 
 		loggedIn:  false,
@@ -13,7 +14,76 @@ export function createUserStore(apiUrl: string) {
 		showSignUpPrompt: false
 	});
 
-	async function getUserData(id: number) {
+	async function setProfilePicture(userId: number, imageId: number) {
+		let endpoint: string = apiUrl + "/api/post/set-pfp";
+		await fetch(endpoint, {
+			credentials: "include",
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				image_id: imageId,
+				user_id: userId
+			})
+		})
+	}
+
+	async function changeDisplayName(newDisplayName: string) {
+		let endpoint: string = apiUrl + "/api/post/change/display-name";
+		await fetch(endpoint, {
+			credentials: "include",
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				new_display_name: newDisplayName
+			})
+		})
+	}
+
+	async function changeDescription(newDescription: string) {
+		let endpoint: string = apiUrl + "/api/post/change/description";
+		await fetch(endpoint, {
+			credentials: "include",
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				new_description: newDescription
+			})
+		})
+	}
+
+	async function deleteAccount(id: number) {
+		let endpoint: string = apiUrl + "/api/post/delete-user";
+		await fetch(endpoint, {
+			credentials: "include",
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				user_id: id
+			})
+		})
+	}
+
+	async function sync() {
+		let d = get(data);
+		let synced = await getUserData(d.id);
+		
+		data.update(oldData => {
+			return {
+				...oldData,
+				...synced
+			}
+		})
+	}
+
+	async function getUserData(id: number): Promise<any> {
 		let res = await fetch(apiUrl + "/api/get/profile/by-id/" + id);
 		let d: any = await res.json();
 
@@ -21,6 +91,7 @@ export function createUserStore(apiUrl: string) {
 			username: d.user_name,
 			displayName: d.display_name,
 			description: d.description,
+			profilePicture: apiUrl + "/api/get/image/" + d.pfp_image,
 			id: id,
 		};
 	}
@@ -40,6 +111,7 @@ export function createUserStore(apiUrl: string) {
 			username: d.user_name,
 			displayName: d.display_name,
 			description: d.description,
+			profilePicture: apiUrl + "/api/get/image/" + d.pfp_image,
 			id: id,
 
 			loggedIn: true,
@@ -113,6 +185,7 @@ export function createUserStore(apiUrl: string) {
 			username: "username",
 			displayName: "displayName",
 			description: "description",
+			profilePicture: "",
 			id: -1,
 
 			loggedIn:  false,
@@ -151,7 +224,12 @@ export function createUserStore(apiUrl: string) {
 		toggleSignUpPrompt,
 		signUp,
 		logIn,
-		logOut
+		logOut,
+		changeDisplayName,
+		changeDescription,
+		sync,
+		deleteAccount,
+		setProfilePicture
 	};
 }
 

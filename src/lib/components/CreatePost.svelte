@@ -4,7 +4,8 @@
 	import TextArea from "$lib/shared/TextArea.svelte";
 	import ImagePicker from "$lib/shared/ImagePicker.svelte";
 
-	import { postStore } from "$stores/postStore";
+	import { postStore } from "$lib/postStore";
+	import until from "$lib/until";
 
 	let postBody: string = "";
 	$: hasValidInput = postBody != "";
@@ -14,8 +15,11 @@
 	let files: any = [];
 
 	let imageIds: number[] = [];
+	let uploading: number = 0;
 
 	const handlePost = async () => {
+		await until(() => uploading === 0);
+		
 		let id = await postStore.addPost(postBody);
 		postBody = "";
 
@@ -28,9 +32,15 @@
 	}
 
 	const handleUpload = async () => {
-		let fileId = await postStore.uploadFile(files[0]);
-
-		imageIds = [...imageIds, fileId];
+		uploading ++;
+		postStore.uploadFile(files[0])
+			.then(fileId => {
+				imageIds = [...imageIds, fileId];
+				uploading --;
+			})
+			.catch(_ => {
+				uploading --;
+			});
 	}
 
 	$: if (files.length) {

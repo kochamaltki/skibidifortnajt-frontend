@@ -1,6 +1,6 @@
 <script lang="ts">
     import Post from "$components/Post.svelte";
-	import { postStore } from "$stores/postStore";
+	import { postStore } from "$lib/postStore";
 	import { onMount } from "svelte";
 
 	export let feedType = "new";

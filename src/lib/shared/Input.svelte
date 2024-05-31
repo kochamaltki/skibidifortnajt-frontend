@@ -14,13 +14,13 @@
 	<div class="left">
 		<slot name="left"/>
 		<input value={input} {type} {placeholder} {required} on:input={handleInput} autocomplete="on">
+		<slot name="right"/>
 	</div>
-	<slot name="right"/>
 </div>
 
 <style lang="scss">
 	.container {
-		width: 100%;
+		width: inherit;
 		background-color: #111215;
 		display: flex;
 		justify-content: space-between;

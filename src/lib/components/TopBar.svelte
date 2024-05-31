@@ -3,8 +3,8 @@
 	import Button from "$lib/shared/Button.svelte";
 	import Clickable from "$lib/shared/Clickable.svelte";
 
-	import { userStore } from "$stores/userStore";
-    import { postStore } from "$stores/postStore";
+	import { userStore } from "$lib/userStore";
+	import { postStore } from "$lib/postStore";
     import { goto } from "$app/navigation";
 
 	let input: string = "";
