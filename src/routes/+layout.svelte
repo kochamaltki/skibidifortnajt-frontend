@@ -91,7 +91,7 @@
 	<div class="right">
 		<div class="sidebar">
 			{#if $sideProfileStore.showSideProfile}
-				<SideProfile/>
+				<SideProfile {...$sideProfileStore}/>
 			{/if}
 		</div>
 	</div>

@@ -1,16 +1,30 @@
 <script lang="ts">
 	import Card from "$lib/shared/Card.svelte";
 
-	export let displayName = "Very Long Display Name";
+	export let displayName = "Short";
 	export let username = "username";
-	export let description = "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."
-	export let profilePicture = "/images/altki/altka0.png"
+	export let description = "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.";
+	export let profilePicture = "";
+	export let id = -1;
+
+	const getProfilePicture= (res: string) => {
+		if(res == "") {
+			return `/images/altki/altka${id % 10}.png`;
+		}
+
+		return res;
+	}
+
+	let profilePictureUrl = getProfilePicture(profilePicture);
+	console.log(profilePictureUrl)
 </script>
 
 <Card>
 	<div class="inner">
 		<div class="top">
-			<img src={profilePicture} alt="">
+			{#if profilePictureUrl != ""}
+				<img src={profilePictureUrl} alt="">
+			{/if}
 			<div class="names">
 				<h1>{displayName}</h1>
 				<h2>@{username}</h2>
@@ -59,6 +73,8 @@
 	.top {
 		display: flex;
 		align-items: center;
+		justify-content: center;
+		width: 100%;
 		gap: 40px;
 	}
 </style>
