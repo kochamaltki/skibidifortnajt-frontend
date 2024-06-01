@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Card from "$lib/shared/Card.svelte";
 
-	export let displayName = "Short";
+	export let displayName = "Display Name";
 	export let username = "username";
 	export let description = "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.";
 	export let profilePicture = "";

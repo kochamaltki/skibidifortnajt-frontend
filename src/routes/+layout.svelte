@@ -91,7 +91,9 @@
 	<div class="right">
 		<div class="sidebar">
 			{#if $sideProfileStore.showSideProfile}
-				<SideProfile {...$sideProfileStore}/>
+				{#key $sideProfileStore.id}
+					<SideProfile {...$sideProfileStore}/>
+				{/key}
 			{/if}
 		</div>
 	</div>
