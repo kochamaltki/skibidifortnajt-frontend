@@ -89,9 +89,11 @@
 	</div>
 
 	<div class="right">
-		{#if $sideProfileStore.showSideProfile}
-			<SideProfile/>
-		{/if}
+		<div class="sidebar">
+			{#if $sideProfileStore.showSideProfile}
+				<SideProfile/>
+			{/if}
+		</div>
 	</div>
 
 	<SignUp/>
