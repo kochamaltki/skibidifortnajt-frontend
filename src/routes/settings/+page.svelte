@@ -62,7 +62,7 @@ TODO:
 					</label>
 
 					{#if profilePicture != ""}
-						<Button on:click={() => {
+						<Button on:click={async () => {
 							profilePicture = "";
 						}}>Delete</Button>
 					{/if}
@@ -85,7 +85,7 @@ TODO:
 					await userStore.changeDescription(description);
 					await userStore.changeDisplayName(displayName);
 					if (profilePicture == "") {
-						//remove pfp
+						await userStore.deleteProfilePicture($userStore.id);
 					} else {
 						await postStore.uploadFile(file[0]).then(async imageId => {
 							await userStore.setProfilePicture($userStore.id, imageId);

@@ -14,6 +14,20 @@ export function createUserStore(apiUrl: string) {
 		showSignUpPrompt: false
 	});
 
+	async function deleteProfilePicture(userId: number) {
+		let endpoint: string = apiUrl + "/api/post/remove-pfp";
+		await fetch(endpoint, {
+			credentials: "include",
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				user_id: userId
+			})
+		})
+	}
+
 	async function setProfilePicture(userId: number, imageId: number) {
 		let endpoint: string = apiUrl + "/api/post/set-pfp";
 		await fetch(endpoint, {
@@ -87,11 +101,14 @@ export function createUserStore(apiUrl: string) {
 		let res = await fetch(apiUrl + "/api/get/profile/by-id/" + id);
 		let d: any = await res.json();
 
+		let pfp = "";
+		if(d.pfp_image != "") pfp = apiUrl + "/api/get/image/" + d.pfp_image;
+
 		return {
 			username: d.user_name,
 			displayName: d.display_name,
 			description: d.description,
-			profilePicture: apiUrl + "/api/get/image/" + d.pfp_image,
+			profilePicture: pfp,
 			id: id,
 		};
 	}
@@ -107,11 +124,14 @@ export function createUserStore(apiUrl: string) {
 		let res = await fetch(apiUrl + "/api/get/profile/by-id/" + id);
 		let d: any = await res.json();
 
+		let pfp = "";
+		if(d.pfp_image != "") pfp = apiUrl + "/api/get/image/" + d.pfp_image;
+
 		data.set({
 			username: d.user_name,
 			displayName: d.display_name,
 			description: d.description,
-			profilePicture: apiUrl + "/api/get/image/" + d.pfp_image,
+			profilePicture: pfp,
 			id: id,
 
 			loggedIn: true,
@@ -229,7 +249,8 @@ export function createUserStore(apiUrl: string) {
 		changeDescription,
 		sync,
 		deleteAccount,
-		setProfilePicture
+		setProfilePicture,
+		deleteProfilePicture
 	};
 }
 
