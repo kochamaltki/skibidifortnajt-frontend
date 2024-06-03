@@ -80,13 +80,15 @@
 		</div>
 	</Card>
 	<!-- comment feed -->
-	<Card>
-		<div class="comments">
-			{#each comments as comment}
-				<Comment {...comment}/>
-			{/each}
-		</div>
-	</Card>
+	{#if comments.length}
+		<Card>
+			<div class="comments">
+				{#each comments as comment}
+					<Comment {...comment}/>
+				{/each}
+			</div>
+		</Card>
+	{/if}
 </div>
 
 <style lang="scss">
