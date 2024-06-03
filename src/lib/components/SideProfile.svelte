@@ -29,7 +29,9 @@
 				<h2>@{username}</h2>
 			</div>
 		</div>
-		<p>{description}</p>
+		{#if description != ""}
+			<p>{description}</p>
+		{/if}
 	</div>
 </Card>
 
