@@ -5,11 +5,16 @@
 	import { sideProfileStore } from "$lib/sideProfileStore";
 
     export let data: PostPageData;
-	sideProfileStore.viewSideProfile(data.id);
+	const fetchData = async () => {
+		let post = await postStore.getPostFromId(data.id)
+		sideProfileStore.viewSideProfile(post.userId);
+	
+		return post;
+	}
 </script>
 
 <div class="container">
-	{#await postStore.getPostFromId(data.id) then post}
+	{#await fetchData() then post}
 		<Post {...post}/>
 	{/await}
 </div>

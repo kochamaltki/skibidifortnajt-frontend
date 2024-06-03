@@ -89,9 +89,13 @@
 	</div>
 
 	<div class="right">
-		{#if $sideProfileStore.showSideProfile}
-			<SideProfile/>
-		{/if}
+		<div class="sidebar">
+			{#if $sideProfileStore.showSideProfile}
+				{#key $sideProfileStore.id}
+					<SideProfile {...$sideProfileStore}/>
+				{/key}
+			{/if}
+		</div>
 	</div>
 
 	<SignUp/>
@@ -190,5 +194,21 @@
 		background-color: #111215;
 		padding: 0px;
 		margin: 0px;
+	}
+
+	@media (max-width: 1550px) {
+		h1 {
+			display: none;
+		}
+
+		.option-content {
+			justify-content: center;
+		}
+	}
+
+	@media (max-width: 1300px) {
+		.sidebar {
+			display: none;
+		}
 	}
 </style>

@@ -17,7 +17,7 @@
 
 	const getProfilePicture= (res: string) => {
 		if(res == "") {
-			return `/images/altki/altka${userId}.png`;
+			return `/images/altki/altka${userId % 10}.png`;
 		}
 
 		return `${apiUrl}/api/get/image/pfp_${res}`;
@@ -104,7 +104,9 @@
 				goto(`/user/${username}`)
 			}}>
 				<div class="profile">
-					<img src="{profilePictureUrl}" alt="profile-pic" class="profile-pic">
+					{#if profilePictureUrl != ""}
+						<img src="{profilePictureUrl}" alt="profile-pic" class="profile-pic">
+					{/if}
 					<div class="username">
 						<h1>{displayName}</h1>
 						<p>{format(datePosted)}</p>
