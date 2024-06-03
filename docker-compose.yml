@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  forntend:
+    image: frontend:latest
+    container_name: frontend
+    restart: always
+    networks:
+      - default
+    environment:
+      - PUID=1000
+      - PGID=1000
+
+networks:
+  default:
+    external: true
+    name: main
