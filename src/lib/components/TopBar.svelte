@@ -89,6 +89,7 @@
         background-color: $bg;
 		height: 100px;
     }
+
     .logo{
         h1{
 			padding: 0;
@@ -97,4 +98,14 @@
 			color: #f0f0f0;
         }
     }
+
+	@media (max-width: 1300px) {
+		.input {
+			width: 100px;
+		}
+
+		.logo, .input, .right {
+			width: unset;
+		}
+	}
 </style>

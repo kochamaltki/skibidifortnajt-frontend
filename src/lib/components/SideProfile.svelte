@@ -76,4 +76,10 @@
 		width: 100%;
 		gap: 40px;
 	}
+
+	@media (max-width: 1550px) {
+		.top {
+			flex-direction: column;
+		}
+	}
 </style>

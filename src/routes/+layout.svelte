@@ -195,4 +195,20 @@
 		padding: 0px;
 		margin: 0px;
 	}
+
+	@media (max-width: 1550px) {
+		h1 {
+			display: none;
+		}
+
+		.option-content {
+			justify-content: center;
+		}
+	}
+
+	@media (max-width: 1300px) {
+		.sidebar {
+			display: none;
+		}
+	}
 </style>
