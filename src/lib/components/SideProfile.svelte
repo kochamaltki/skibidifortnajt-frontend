@@ -16,7 +16,6 @@
 	}
 
 	let profilePictureUrl = getProfilePicture(profilePicture);
-	console.log(profilePictureUrl)
 </script>
 
 <Card>
@@ -40,7 +39,6 @@
 		width: 128px;
 		height: 128px;
 		border-radius: 64px;
-
 	}
 
 	h2 {
@@ -59,6 +57,7 @@
 	}
 
 	.inner {
+		word-break: break-all;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
