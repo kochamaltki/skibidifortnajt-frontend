@@ -57,7 +57,7 @@
 	}
 
 	.inner {
-		word-break: break-all;
+		word-break: break-word;
 		display: flex;
 		flex-direction: column;
 		align-items: center;

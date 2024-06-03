@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { formatDistance } from 'date-fns'
 	import { scale } from 'svelte/transition'
 	import { elasticOut } from 'svelte/easing'
 	import { goto } from '$app/navigation';
+	import format from "$lib/formatDate"
 
 	import Card from '$lib/shared/Card.svelte';
 	import Clickable from '$lib/shared/Clickable.svelte';
@@ -57,10 +57,6 @@
 	checkLiked();
 	$: $userStore.loggedIn, checkLiked();
 	// $: chunks = formatHashtags(content);
-
-	const format = (date: number) => {
-		return formatDistance(new Date(date), new Date(), { addSuffix: true });
-	}
 
 	const likePost = async () => {
 		if($userStore.loggedIn) {
