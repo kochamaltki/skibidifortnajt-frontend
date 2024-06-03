@@ -30,7 +30,7 @@
 			workingGoto("/top");
 		}
 	}}>
-		<div class="input">
+			<div class="input">
 			<Input bind:input={input} placeholder="Search..." type="search">
 				<svg slot="left" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="search"><path fill="#313646" d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"></path></svg>
 				<Clickable slot="right">
@@ -88,7 +88,12 @@
 
         background-color: $bg;
 		height: 100px;
+		gap: 40px;
     }
+
+	.right {
+		flex-shrink: 0;
+	}
 
     .logo{
         h1{
@@ -100,11 +105,17 @@
     }
 
 	@media (max-width: 1300px) {
-		.input {
-			width: 100px;
+		.logo, .right {
+			width: unset;
 		}
 
-		.logo, .input, .right {
+		.input {
+			width: 600px;
+		}
+	}
+
+	@media (max-width: 1100px) {
+		.input {
 			width: unset;
 		}
 	}
