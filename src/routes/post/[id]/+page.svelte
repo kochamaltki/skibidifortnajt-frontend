@@ -3,6 +3,7 @@
 	import Post from "$components/Post.svelte";
 	import Card from "$lib/shared/Card.svelte";
 	import TextArea from "$lib/shared/TextArea.svelte";
+	import Comment from "$components/Comment.svelte";
 
 	import { postStore } from "$lib/postStore";
 	import { sideProfileStore } from "$lib/sideProfileStore";
@@ -33,6 +34,14 @@
 		</div>
 	</Card>
 	<!-- comment feed -->
+	<Card>
+		<div class="comments">
+			<Comment/>
+			<Comment/>
+			<Comment/>
+			<Comment/>
+		</div>
+	</Card>
 </div>
 
 <style lang="scss">
@@ -48,5 +57,11 @@
 
 	.content {
 		display: flex;
+	}
+
+	.comments {
+		display: flex;
+		flex-direction: column;
+		gap: 40px;
 	}
 </style>
