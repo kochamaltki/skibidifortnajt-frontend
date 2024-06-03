@@ -6,6 +6,7 @@ export function createSideProfileStore() {
 		username: "username",
 		displayName: "displayName",
 		description: "description",
+		profilePicture: "",
 		id: -1,
 
 		showSideProfile: false

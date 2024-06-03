@@ -1,25 +1,47 @@
 <script lang="ts">
 	import Clickable from "$lib/shared/Clickable.svelte";
+	import apiUrl from "$lib/apiUrl";
 	import format from "$lib/formatDate";
+    import { goto } from "$app/navigation";
 
-	export let commentContent: string = "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."
-	export let userId: number = -1;
+	export let content: string = "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."
+	export let username: string = "username";
 	export let displayName: string = "displayName";
 	export let profilePicture: string = "/images/altki/altka0.png";
 	export let datePosted: number = 0;
+	export let commentId: number = -1;
+	export let userId: number = -1;
+
+	const getProfilePicture= (res: string) => {
+		if(res == "") {
+			return `/images/altki/altka${userId % 10}.png`;
+		}
+
+		return apiUrl + "/api/get/image/" + res;
+	}
+
+	let profilePictureUrl = getProfilePicture(profilePicture);
+
+	const viewAuthor = () => {
+		goto(`/user/${username}`)
+	}
 </script>
 
 <div class="container">
 	<div class="left">
-		<img src="{profilePicture}" alt="profile-pic" class="profile-pic">
+		<Clickable on:click={viewAuthor}>
+			<img src="{profilePictureUrl}" alt="profile-pic" class="profile-pic">
+		</Clickable>
 	</div>
 
 	<div class="mid">
-		<div class="top">
-			<h1>{displayName}</h1>
-			<h2>{format(datePosted)}</h2>
-		</div>
-		<p>{commentContent}</p>
+		<Clickable on:click={viewAuthor}>
+			<div class="top">
+				<h1>{displayName}</h1>
+				<h2>{format(datePosted)}</h2>
+			</div>
+		</Clickable>
+		<p>{content}</p>
 	</div>
 
 	<div class="right">
@@ -79,7 +101,8 @@
 	}
 
 	img {
-		max-width: 50px;
+		width: 50px;
+		height: 50px;
 		border-radius: 30px;
 		user-select: none;
 	}
