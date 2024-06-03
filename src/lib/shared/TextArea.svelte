@@ -20,7 +20,7 @@
 		background-color: #111215;
 		display: flex;
 		justify-content: space-between;
-		align-items: center;
+		align-items: flex-end;
 		gap: 15px;
 
 		padding: 15px 30px;
@@ -31,6 +31,13 @@
 		width: 100%;
 		display: flex;
 		align-items: center;
+		gap: 15px;
+	}
+
+	.right {
+		width: 100%;
+		display: flex;
+		align-items: flex-end;
 		gap: 15px;
 	}
 
