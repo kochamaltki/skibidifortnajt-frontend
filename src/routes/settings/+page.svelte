@@ -113,6 +113,8 @@ TODO:
 	h1 {
 		width: inherit;
 		font-size: 30px;
+		pointer-events: none;
+		user-select: none;
 	}
 
 	.setting {
