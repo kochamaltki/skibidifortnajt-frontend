@@ -26,7 +26,7 @@
 	let commentInput = "";
 
 	const fetchComments = async () => {
-		let res = await fetch("http://localhost:8000/api/get/comments/" + data.id);
+		let res = await fetch(apiUrl + "/api/get/comments/" + data.id);
 		let fetched = (await res.json()).comment_list;
 		
 		comments = fetched.map((comment: any) => {

@@ -5,7 +5,10 @@ then
 	echo "Please give the feature a name!"
 else
 	git checkout main
-	git pull origin main
-	git checkout -b $1
-	echo $1 > .branchdata
+	if git pull origin main; then
+		git checkout -b $1
+		echo $1 > .branchdata
+	else
+		echo "Failed to pull changes from github!"
+	fi
 fi
