@@ -6,18 +6,10 @@
 
 	import { sideProfileStore } from "$lib/sideProfileStore";
 	import { userStore } from "$lib/userStore";
-    import { get } from "svelte/store";
     import { goto } from "$app/navigation";
     import { onMount } from "svelte";
 	import until from "$lib/until";
     import { postStore } from "$lib/postStore";
-
-	let data = get(userStore);
-	if(data.loggedIn) {
-		sideProfileStore.viewSideProfile(data.id);
-	} else {
-		sideProfileStore.hideSideProfile();
-	}
 
 	let file: any = [];
 	let fileInput: any;
@@ -31,6 +23,7 @@
 
 	onMount(() => {
 		until(() => $userStore.loggedIn).then(_ => {
+			sideProfileStore.viewSideProfile($userStore.id);
 			profilePicture = $userStore.profilePicture;
 			displayName = $userStore.displayName;
 			description = $userStore.description;
