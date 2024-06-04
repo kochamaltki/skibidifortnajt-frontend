@@ -67,9 +67,11 @@
 </script>
 
 <div class="container">
-	{#await fetchData() then post}
-		<Post {...post}/>
-	{/await}
+	{#key comments}
+		{#await fetchData() then post}
+			<Post {...post}/>
+		{/await}
+	{/key}
 	<Card>
 		<div class="content">
 			<TextArea placeholder="Write a comment..." rows={1} bind:input={commentInput}>

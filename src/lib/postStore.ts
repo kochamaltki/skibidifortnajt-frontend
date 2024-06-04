@@ -56,7 +56,8 @@ export function createPostStore(apiUrl: string) {
 			userId: d.user_id,
 			images: images,
 			displayName: d.display_name,
-			profilePicture: d.pfp_image
+			profilePicture: d.pfp_image,
+			commentCount: d.like_count
 		}
 	}
 
@@ -81,7 +82,8 @@ export function createPostStore(apiUrl: string) {
 				userId: post.user_id,
 				images: images,
 				displayName: post.display_name,
-				profilePicture: post.pfp_image
+				profilePicture: post.pfp_image,
+				commentCount: post.like_count
 			}
 		}));
 
