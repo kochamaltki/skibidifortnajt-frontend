@@ -8,4 +8,5 @@ export interface Post {
 	images: Array<string>;
 	profilePicture: string;
 	username: string;
+	commentCount: number
 }
